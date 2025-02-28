@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
-using UnityEngine;
 using System.Collections;
 using Il2CppSG.Airlock.XR;
 using Il2CppSG.Airlock;
@@ -16,8 +15,6 @@ using Il2CppSG.Airlock.UI;
 using Il2CppSG.Airlock.Network;
 using Il2CppSystem.Collections.Generic;
 using MelonLoader.Utils;
-using System;
-using System.IO;
 using System.Net.Http;
 using Il2CppSystem;
 using Exception = System.Exception;
@@ -26,9 +23,16 @@ namespace AmongUsHacks
 {
     public class Class1 : MelonMod
     {
+        private MelonPreferences_Category? settings;
+
+
         private bool blacklistUpdated = false;
         private string remoteBlacklistURL = "https://raw.githubusercontent.com/eepyfemboi/AmongUsVRHacks/refs/heads/main/dynamic_data/blacklisted_object_names.txt";
         private bool doRemoteBlacklistUpdate = true;
+
+        private MelonPreferences_Entry<string>? remoteBlacklistURL_config;
+        private MelonPreferences_Entry<bool>? doRemoteBlacklistUpdate_config;
+
 
         private string blacklistFilePath = Path.Combine(MelonEnvironment.GameRootDirectory, "blacklist.txt");
         private System.Collections.Generic.List<string> blacklist = new System.Collections.Generic.List<string>();
@@ -36,20 +40,66 @@ namespace AmongUsHacks
         private bool collidersToggled = false;
         private System.Collections.Generic.List<GameObject> disabledObjectsList = new System.Collections.Generic.List<GameObject>();
 
+        private MelonPreferences_Entry<KeyCode>? collidersToggleKey_config;
+
+
         private KeyCode speedToggleKey = KeyCode.S;
         private bool speedEnabled = false;
         private float speedSetting = 11f;
 
+        private MelonPreferences_Entry<KeyCode>? speedToggleKey_config;
+        private MelonPreferences_Entry<float>? speedSetting_config;
+
+
         private KeyCode wallHackToggleKey = KeyCode.W;
         private bool wallHackEnabled = false;
+
+        private MelonPreferences_Entry<KeyCode>? wallHackToggleKey_config;
+
 
         private KeyCode imposterToggleKey = KeyCode.I;
         private bool imposterEnabled = false;
 
+        private MelonPreferences_Entry<KeyCode>? imposterToggleKey_config;
+
+
         public override void OnInitializeMelon()
         {
+            LoadConfig();
+
             MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source at https://github.com/eepyfemboi/AmongUsVRHacks");
             LoadBlacklist();
+        }
+
+        private void LoadConfig()
+        {
+            settings = MelonPreferences.CreateCategory("AmongUsVRHacksSettings");
+
+
+            remoteBlacklistURL_config = settings.CreateEntry("RemoteBlacklistURL", remoteBlacklistURL, "Remote Object Blacklist URL");
+            doRemoteBlacklistUpdate_config = settings.CreateEntry("DoRemoteBlacklistUpdate", doRemoteBlacklistUpdate, "Do Remote Blacklist Update On Load");
+
+            collidersToggleKey_config = settings.CreateEntry("ToggleCollidersKeybind", collidersToggleKey, "Toggle Colliders Keybind");
+
+            speedToggleKey_config = settings.CreateEntry("ToggleSpeedKeybind", speedToggleKey, "Toggle Speed Keybind");
+            speedSetting_config = settings.CreateEntry("SpeedSetting", speedSetting, "Speed Increase Value");
+
+            wallHackToggleKey_config = settings.CreateEntry("WallHackToggleKey", wallHackToggleKey, "Toggle Wallhacks Keybind");
+
+            imposterToggleKey_config = settings.CreateEntry("ImposterToggleKey", imposterToggleKey, "Toggle Show Imposters Keybind");
+
+
+            remoteBlacklistURL = remoteBlacklistURL_config.Value;
+            doRemoteBlacklistUpdate = doRemoteBlacklistUpdate_config.Value;
+
+            collidersToggleKey = collidersToggleKey_config.Value;
+
+            speedToggleKey = speedToggleKey_config.Value;
+            speedSetting = speedSetting_config.Value;
+
+            wallHackToggleKey = wallHackToggleKey_config.Value;
+
+            imposterToggleKey = imposterToggleKey_config.Value;
         }
 
         public override void OnUpdate()
