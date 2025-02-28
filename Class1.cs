@@ -1,0 +1,286 @@
+﻿using MelonLoader;
+using UnityEngine;
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+using UnityEngine;
+using System.Collections;
+using Il2CppSG.Airlock.XR;
+using Il2CppSG.Airlock;
+using static Il2Cpp.Utils;
+using Il2CppSG.Airlock.Roles;
+using Il2CppFusion;
+using Il2CppSG.Airlock.UI;
+using Il2CppSG.Airlock.Network;
+using Il2CppSystem.Collections.Generic;
+using MelonLoader.Utils;
+using System;
+using System.IO;
+using System.Net.Http;
+using Il2CppSystem;
+using Exception = System.Exception;
+
+namespace AmongUsHacks
+{
+    public class Class1 : MelonMod
+    {
+        private bool blacklistUpdated = false;
+        private string remoteBlacklistURL = "https://raw.githubusercontent.com/eepyfemboi/AmongUsVRHacks/refs/heads/main/dynamic_data/blacklisted_object_names.txt";
+        private bool doRemoteBlacklistUpdate = true;
+
+        private string blacklistFilePath = Path.Combine(MelonEnvironment.GameRootDirectory, "blacklist.txt");
+        private System.Collections.Generic.List<string> blacklist = new System.Collections.Generic.List<string>();
+        private KeyCode collidersToggleKey = KeyCode.C;
+        private bool collidersToggled = false;
+        private System.Collections.Generic.List<GameObject> disabledObjectsList = new System.Collections.Generic.List<GameObject>();
+
+        private KeyCode speedToggleKey = KeyCode.S;
+        private bool speedEnabled = false;
+        private float speedSetting = 11f;
+
+        private KeyCode wallHackToggleKey = KeyCode.W;
+        private bool wallHackEnabled = false;
+
+        private KeyCode imposterToggleKey = KeyCode.I;
+        private bool imposterEnabled = false;
+
+        public override void OnInitializeMelon()
+        {
+            MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source at https://github.com/eepyfemboi/AmongUsVRHacks");
+            LoadBlacklist();
+        }
+
+        public override void OnUpdate()
+        {
+            HandleKeybinds();
+        }
+
+        private void HandleKeybinds()
+        {
+            if (Input.GetKeyDown(collidersToggleKey))
+            {
+                ToggleColliders();
+            }
+            if (Input.GetKeyDown(speedToggleKey))
+            {
+                TogglePlayerSpeed();
+            }
+            if (Input.GetKeyDown(imposterToggleKey))
+            {
+                ToggleShowImposters();
+            }
+        }
+
+
+
+        private void ToggleColliders()
+        {
+            MelonLogger.Msg($"Toggling colliders to {!collidersToggled}");
+
+            LoadBlacklist();
+            if (collidersToggled)
+            {
+                ReEnableDisabledObjects();
+            }
+            else
+            {
+                DisableMatchingObjects();
+            }
+
+            collidersToggled = !collidersToggled;
+            MelonLogger.Msg($"Toggling colliders to {collidersToggled}");
+        }
+
+        private void TogglePlayerSpeed()
+        {
+            MelonLogger.Msg($"Toggling speed increase to {!speedEnabled}");
+
+            if (speedEnabled)
+            {
+                SetPlayerSpeed(6.5f);
+            }
+            else
+            {
+                SetPlayerSpeed(speedSetting);
+            }
+
+            speedEnabled = !speedEnabled;
+            MelonLogger.Msg($"Toggled speed increase to {speedEnabled}");
+        }
+
+        private void ToggleShowImposters()
+        {
+            MelonLogger.Msg($"Toggling show imposters to {!imposterEnabled}");
+
+            if (imposterEnabled)
+            {
+                HideImposters();
+            }
+            else
+            {
+                ShowImposters();
+            }
+
+            imposterEnabled = !imposterEnabled;
+            MelonLogger.Msg($"Toggled show imposters to {imposterEnabled}");
+        }
+
+
+
+        private void FetchBlacklist()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    MelonLogger.Msg($"Updating blacklisted objects from url: {remoteBlacklistURL}");
+                    string response = client.GetStringAsync(remoteBlacklistURL).GetAwaiter().GetResult();
+                    File.WriteAllText(blacklistFilePath, response);
+                    MelonLogger.Msg("Finished updating blacklisted objects");
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg($"Failed to fetch blacklisted objects: {ex.Message}");
+            }
+
+            blacklistUpdated = true;
+        }
+
+        private void LoadBlacklist()
+        {
+            if (!blacklistUpdated && doRemoteBlacklistUpdate)
+            {
+                MelonLogger.Msg("Attempting to fetch updated blacklist...");
+                FetchBlacklist();
+            }
+
+            if (File.Exists(blacklistFilePath))
+            {
+                blacklist = File.ReadAllLines(blacklistFilePath)
+                    .Select(line => line.Trim())
+                    .Where(line => !string.IsNullOrEmpty(line))
+                    .ToList();
+
+                MelonLogger.Msg($"Loaded {blacklist.Count} blacklist entries.");
+            }
+            else
+            {
+                MelonLogger.Warning($"Blacklist file not found: {blacklistFilePath}");
+            }
+        }
+
+
+
+        private void SetImposterNametag(NetworkedLocomotionPlayer player, bool isImposter)
+        {
+            UINameTag nameTag = player._nameTag;
+            nameTag.IsImpostorText = isImposter;
+        }
+
+        private void HideImposters()
+        {
+            foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>())
+            {
+                try
+                {
+                    SetImposterNametag(player, false);
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Msg(ex);
+                }
+            }
+        }
+
+        private void ShowImposters()
+        {
+            RoleManager roleManager = GameObject.FindObjectOfType<RoleManager>();
+            //List<int> imposterPlayerIDs = roleManager.gameRoleToPlayerIds.TryGetValue(GameRole.Imposter, out List<int> imposterPlayerIDs);
+            //roleManager.gameRoleToPlayerIds;
+            
+            //roleManager.CheckPlayerRole(GameRole.Imposter)
+            if (roleManager.gameRoleToPlayerIds.TryGetValue(GameRole.Imposter, out Il2CppSystem.Collections.Generic.List<int> imposterPlayerIDs))
+            {
+                MelonLogger.Msg($"Raw Dict: {roleManager.gameRoleToPlayerIds.ToString()}  Gathered Player IDs: {imposterPlayerIDs}");
+                foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>())
+                {
+                    try
+                    {
+                        //player._cachedPlayerID
+                        //player._nameTag.NameID
+                        MelonLogger.Msg($"Current Player ID: {player._cachedPlayerID}");
+                        if (imposterPlayerIDs.Contains(player._cachedPlayerID))
+                        {
+                            MelonLogger.Msg($"Setting player ID {player._cachedPlayerID} name {player._nameTag._storedName} as imposter");
+                            SetImposterNametag(player, true);
+                            MelonLogger.Msg($"Player ID {player._cachedPlayerID} name {player._nameTag._storedName} has been set as imposter");
+                        }
+                    } catch (Exception ex)
+                    {
+                        MelonLogger.Msg(ex);
+                    }
+                }
+            }
+        }
+
+
+
+        private void DisableMatchingObjects()
+        {
+            int disabledCount = 0;
+            disabledObjectsList = new System.Collections.Generic.List<GameObject>();
+
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (blacklist.Any(phrase => obj.name.IndexOf(phrase, System.StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    obj.SetActive(false);
+                    disabledObjectsList.Add(obj);
+                    disabledCount++;
+                    MelonLogger.Msg($"Disabled: {obj.name}");
+                }
+            }
+
+            MelonLogger.Msg($"Finished disabling {disabledCount} objects.");
+        }
+
+        private void ReEnableDisabledObjects()
+        {
+            int enabledCount = 0;
+            
+            foreach (GameObject obj in disabledObjectsList)
+            {
+                try
+                {
+                    obj.SetActive(true);
+                    enabledCount++;
+                    MelonLogger.Msg($"Re-Enabled: {obj.name}");
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Msg($"Failed to re-enable object: {obj.name}");
+                }
+            }
+
+            MelonLogger.Msg($"Finished re-enabling {enabledCount} objects");
+        }
+
+
+
+        private void SetPlayerSpeed(float speed)
+        {
+            int modifiedCount = 0;
+            foreach (XRRig rig in GameObject.FindObjectsOfType<XRRig>())
+            {
+                rig._speed = speed;
+                modifiedCount++;
+                MelonLogger.Msg($"Modified {rig.gameObject.name}: _speed set to {speed}");
+            }
+
+            MelonLogger.Msg($"Finished updating {modifiedCount} XRRig instances.");
+        }
+    }
+}

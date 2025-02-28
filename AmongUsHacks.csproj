@@ -1,0 +1,100 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ds5678.Modding.Unity.KeyboardUtilities" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Il2CppFusion.Addressables">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppFusion.Common">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppFusion.Realtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Realtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppFusion.Runtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppFusion.Scripts">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Scripts.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppFusion.Sockets">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppFusion.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppGilgaMesh.Runtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppGilgaMesh.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSG.Airlock">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.Airlock.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSG.FusionSimulator">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.FusionSimulator.dll</HintPath>
+    </Reference>
+    <Reference Include="MelonLoader">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\MelonLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="MelonLoader.NativeHost">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\MelonLoader.NativeHost.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ContentLoadModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.ContentLoadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
