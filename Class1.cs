@@ -300,19 +300,25 @@ namespace AmongUsHacks
         private void ReEnableDisabledObjects()
         {
             int enabledCount = 0;
-            
-            foreach (GameObject obj in disabledObjectsList)
+            try
             {
-                try
+                foreach (GameObject obj in disabledObjectsList)
                 {
-                    obj.SetActive(true);
-                    enabledCount++;
-                    MelonLogger.Msg($"Re-Enabled: {obj.name}");
+                    try
+                    {
+                        obj.SetActive(true);
+                        enabledCount++;
+                        MelonLogger.Msg($"Re-Enabled: {obj.name}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MelonLogger.Msg($"Failed to re-enable object: {obj.name}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MelonLogger.Msg($"Failed to re-enable object: {obj.name}");
-                }
+            }
+            catch (Exception ex) 
+            {
+                MelonLogger.Msg(ex);
             }
 
             MelonLogger.Msg($"Finished re-enabling {enabledCount} objects");
