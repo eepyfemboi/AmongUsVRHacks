@@ -8,9 +8,9 @@ a barely working melonloader hack client for amongus vr (only works for steamvr/
 ### This is a melonloader mod, meaning you have to be using melonloader to run it. To install melonloader, click here: [https://melonwiki.xyz/](https://melonwiki.xyz/)
 
 current features include:
-- no-clip (disabling colliders and the blinding box - currently only works on skeld right now)
-- speed increase
-- force show imposters (this only works if you're the host i think)
+- no-clip (disabling colliders and the blinding box - currently only works on skeld right now) -- Press "C" to toggle
+- speed increase -- Press "S" to toggle
+- force show imposters (this only works if you're the host i think) -- Press "I" to toggle
 
 planned features:
 - WallHacks (allows you to see players through walls)
