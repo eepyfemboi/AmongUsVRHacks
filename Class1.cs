@@ -18,6 +18,7 @@ using MelonLoader.Utils;
 using System.Net.Http;
 using Il2CppSystem;
 using Exception = System.Exception;
+using Il2CppSG.Airlock.Util;
 
 namespace AmongUsHacks
 {
@@ -63,6 +64,9 @@ namespace AmongUsHacks
         private MelonPreferences_Entry<KeyCode>? imposterToggleKey_config;
 
 
+        private GameObject? newInstanceDetectorObject;
+
+
         public override void OnInitializeMelon()
         {
             LoadConfig();
@@ -105,6 +109,7 @@ namespace AmongUsHacks
         public override void OnUpdate()
         {
             HandleKeybinds();
+            InstanceChangedCheck();
         }
 
         private void HandleKeybinds()
@@ -337,6 +342,75 @@ namespace AmongUsHacks
             }
 
             MelonLogger.Msg($"Finished updating {modifiedCount} XRRig instances.");
+        }
+
+
+        private System.Collections.Generic.List<GameObject> FindAllCrewmatePhysics()
+        {
+            System.Collections.Generic.List<GameObject> crewmates = new System.Collections.Generic.List<GameObject>();
+
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (obj.name.Contains("CrewmatePhysics"))
+                {
+                    crewmates.Add(obj);
+                    MelonLogger.Msg($"Found: {obj.name}");
+                }
+            }
+
+            return crewmates;
+        }
+
+        private GameObject? FindSelfCrewmatePhysics(System.Collections.Generic.List<GameObject> crewmates)
+        {
+            foreach (GameObject obj in crewmates)
+            {
+                foreach (Transform childObj in obj.GetComponentsInChildren<Transform>()) 
+                { 
+                    if (childObj.gameObject.name == "Speaker")
+                    {
+                        return childObj.gameObject;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void DisableFocusLostNotif()
+        {
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (obj.name == "SM_UI_NotificationPopup_01")
+                {
+                    UnityEngine.Object.Destroy(obj);
+                }
+                if (obj.name == "UI_FocusLostNotification")
+                {
+                    MaterialProperty objMat = obj.GetComponent<MaterialProperty>();
+                    objMat.enabled = false;
+                }
+            }
+        }
+
+        private void InstanceChangedCheck()
+        {
+            if (newInstanceDetectorObject != null)
+            {
+                try
+                {
+                    string? name = newInstanceDetectorObject.name;
+                    return;
+                } catch
+                {
+
+                }
+            }
+            newInstanceDetectorObject = new GameObject();
+            speedEnabled = false;
+            collidersToggled = false;
+            imposterEnabled = false;
+            MelonLogger.Msg("Instance change detected! Resetting values.");
         }
     }
 }
