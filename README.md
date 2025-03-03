@@ -11,9 +11,9 @@ current features include:
 - no-clip (disabling colliders and the blinding box - currently only works on skeld right now) -- Press "C" to toggle
 - speed increase -- Press "S" to toggle
 - force show imposters (this only works if you're the host i think) -- Press "I" to toggle
+- WallHacks (allows you to see players through walls) -- Press "W" to toggle
 
 planned features:
-- WallHacks (allows you to see players through walls)
 - kill alerts (alerts you when someone kills someone else)
 - minigame/task autocompleter
 - unignore ghosts (will allow you to see and talk to dead players)
