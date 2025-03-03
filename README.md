@@ -18,10 +18,18 @@ planned features:
 - minigame/task autocompleter
 - unignore ghosts (will allow you to see and talk to dead players)
 - dead interact (will allow you to interact with stuff that you normally cant interact with when you're dead, i.e. voting, sabotages, etc)
+- teleporter (will let you teleport to other players)
+- alwayslight (allows you to see when the lights are out or the view distance is turned down)
+- tracers (draws a line from you to other players)
+- a clickgui for toggling and configuring modules
 
 this was mostly made by using unity explorer to dig around in the game, so if you want to contribute, keep that in mind
 
 the end result will probably have rly low code quality and wont work very well, but its better than nothing :3 
+
+if you want to suggest new features then open an issue and i'll get to it
+
+if you dont like my code quality then dont open issues send prs
 
 also dont use it for malicious purposes pls
   
