@@ -19,6 +19,9 @@ using System.Net.Http;
 using Il2CppSystem;
 using Exception = System.Exception;
 using Il2CppSG.Airlock.Util;
+using UnityEngine.Rendering;
+using Il2Cpp;
+using UnityEngine.Rendering.Universal;
 
 namespace AmongUsHacks
 {
@@ -54,8 +57,19 @@ namespace AmongUsHacks
 
         private KeyCode wallHackToggleKey = KeyCode.W;
         private bool wallHackEnabled = false;
+        private System.Collections.Generic.Dictionary<Renderer, Material[]> modifiedRenderers = new System.Collections.Generic.Dictionary<Renderer, Material[]>();
+        private System.Collections.Generic.Dictionary<Renderer, Material[]> tempMaterials = new System.Collections.Generic.Dictionary<Renderer, Material[]>();
+        private System.Collections.Generic.Dictionary<Shader, System.Collections.Generic.Dictionary<string, float>> savedShaderProperties = new System.Collections.Generic.Dictionary<Shader, System.Collections.Generic.Dictionary<string, float>>();
+        private System.Collections.Generic.Dictionary<Shader, int> savedRenderQueues = new System.Collections.Generic.Dictionary<Shader, int>();
+        private string wallHackShaderModifyName = "Airlock/Character_V2";
+        private Camera overlayCam;
+        private System.Collections.Generic.List<GameObject> wallHackTargetObjects = new System.Collections.Generic.List<GameObject>();
+        private System.Collections.Generic.Dictionary<GameObject, int> wallHackOriginalLayers = new System.Collections.Generic.Dictionary<GameObject, int>();
+        private UniversalAdditionalCameraData overlayCamData;
+        private int overlayLayer = 7;
 
         private MelonPreferences_Entry<KeyCode>? wallHackToggleKey_config;
+        private MelonPreferences_Entry<int>? overlayLayer_config;
 
 
         private KeyCode imposterToggleKey = KeyCode.I;
@@ -89,6 +103,7 @@ namespace AmongUsHacks
             speedSetting_config = settings.CreateEntry("SpeedSetting", speedSetting, "Speed Increase Value");
 
             wallHackToggleKey_config = settings.CreateEntry("WallHackToggleKey", wallHackToggleKey, "Toggle Wallhacks Keybind");
+            overlayLayer_config = settings.CreateEntry("WallHackOverlayLayer", overlayLayer, "WallHack Overlay Layer");
 
             imposterToggleKey_config = settings.CreateEntry("ImposterToggleKey", imposterToggleKey, "Toggle Show Imposters Keybind");
 
@@ -102,6 +117,7 @@ namespace AmongUsHacks
             speedSetting = speedSetting_config.Value;
 
             wallHackToggleKey = wallHackToggleKey_config.Value;
+            overlayLayer = overlayLayer_config.Value;
 
             imposterToggleKey = imposterToggleKey_config.Value;
         }
@@ -125,6 +141,10 @@ namespace AmongUsHacks
             if (Input.GetKeyDown(imposterToggleKey))
             {
                 ToggleShowImposters();
+            }
+            if (Input.GetKeyDown(wallHackToggleKey))
+            {
+                ToggleWallHack();
             }
         }
 
@@ -180,6 +200,23 @@ namespace AmongUsHacks
 
             imposterEnabled = !imposterEnabled;
             MelonLogger.Msg($"Toggled show imposters to {imposterEnabled}");
+        }
+
+        private void ToggleWallHack()
+        {
+            MelonLogger.Msg($"Toggling wallhack to {!wallHackEnabled}");
+
+            if (wallHackEnabled)
+            {
+                DisableWallHack();
+            }
+            else
+            {
+                EnableWallHack();
+            }
+
+            wallHackEnabled = !wallHackEnabled;
+            MelonLogger.Msg($"Toggled wallhack to {wallHackEnabled}");
         }
 
 
@@ -392,6 +429,321 @@ namespace AmongUsHacks
                 }
             }
         }
+
+        private void ApplyWallHackToObject(GameObject obj)
+        {
+            int currentChangedRenderers = 0;
+
+            foreach (Renderer renderer in obj.GetComponentsInChildren<Renderer>())
+            {
+                Material[] originalMaterials = renderer.sharedMaterials;
+                //Material[] originalMaterials = renderer.materials;
+                Material[] duplicatedMaterials = new Material[originalMaterials.Length];
+
+                for (int i = 0; i < originalMaterials.Length; i++)
+                {
+                    if (originalMaterials[i] == null)
+                    {
+                        MelonLogger.Warning($"the material is missing for renderer {renderer.gameObject.name}!");
+                        continue;
+                    }
+
+                    duplicatedMaterials[i] = new Material(originalMaterials[i]);
+                    /*{
+                        shader = originalMaterials[i].shader,
+                        renderQueue = 5000
+                    };*/
+
+                    Shader originalShader = originalMaterials[i].shader;
+                    Shader newShader = new Shader();
+                    newShader = Shader.Find(originalShader.name);
+
+                    duplicatedMaterials[i].shader = newShader;
+
+                    // at this point im just trying everything i can find online to make this work because i dont want to have to make a custom shader for the wallhacks
+                    duplicatedMaterials[i].renderQueue = 5000;
+                    duplicatedMaterials[i].SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                    duplicatedMaterials[i].SetInt("_ZWrite", 0);
+                    duplicatedMaterials[i].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    duplicatedMaterials[i].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    duplicatedMaterials[i].SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+
+                    renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    renderer.receiveShadows = false;
+                }
+
+                renderer.materials = duplicatedMaterials;
+                modifiedRenderers[renderer] = originalMaterials;
+                tempMaterials[renderer] = duplicatedMaterials;
+            }
+
+            MelonLogger.Msg($"enabled wallhack for {modifiedRenderers.Count} renderers");
+        }
+
+        private void RemoveWallHacks()
+        {
+            foreach (var entry in modifiedRenderers)
+            {
+                Renderer renderer = entry.Key;
+                Material[] originalMaterials = entry.Value;
+
+                if (renderer != null)
+                {
+                    renderer.materials = originalMaterials;
+                }
+            }
+
+            /*foreach (Renderer renderer in modifiedRenderers.Keys)
+            {
+                foreach (Material mat in renderer.materials)
+                {
+                    UnityEngine.Object.Destroy(mat);
+                }
+            }
+
+            modifiedRenderers.Clear();*/
+
+            foreach (var entry in tempMaterials)
+            {
+                foreach (Material mat in entry.Value)
+                {
+                    if (mat != null)
+                        UnityEngine.Object.Destroy(mat);
+                }
+            }
+
+            modifiedRenderers.Clear();
+            tempMaterials.Clear();
+
+            MelonLogger.Msg("restored original materials from wallhack");
+        }
+
+
+        private void SetupOverlayCamera()
+        {
+            if (overlayCam != null) return;
+
+            Camera mainCam = Camera.main;
+            if (mainCam == null)
+            {
+                MelonLogger.Error("i think something went wrong lol");
+                return;
+            }
+
+            overlayCam = new GameObject("OverlayCamera").AddComponent<Camera>();
+            overlayCam.transform.SetParent(mainCam.transform);
+
+            overlayCam.transform.localPosition = Vector3.zero;
+            overlayCam.transform.localRotation = Quaternion.identity;
+            overlayCam.transform.localScale = Vector3.one;
+
+            overlayCam.depth = 100;
+            overlayCam.clearFlags = CameraClearFlags.Depth;
+
+            overlayCam.orthographic = Camera.main.orthographic;
+            overlayCam.fieldOfView = Camera.main.fieldOfView;
+
+            overlayCam.cullingMask = 1 << overlayLayer;
+
+            overlayCam.allowHDR = false;
+            overlayCam.allowMSAA = false;
+            overlayCam.allowDynamicResolution = false;
+
+            overlayCam.useOcclusionCulling = false;
+
+
+            overlayCamData = overlayCam.gameObject.AddComponent<UniversalAdditionalCameraData>();
+            overlayCamData.renderType = CameraRenderType.Overlay;
+
+            UniversalAdditionalCameraData mainCamData = mainCam.GetComponent<UniversalAdditionalCameraData>();
+            if (mainCamData != null)
+            {
+                mainCamData.cameraStack.Add(overlayCam);
+                MelonLogger.Msg("it worked i think");
+            }
+            else
+            {
+                MelonLogger.Error("it didnt work");
+            }
+
+            //UniversalAdditionalCameraData baseCameraData = mainCam.GetComponent<UniversalAdditionalCameraData>();
+            //baseCameraData.cameraStack.Add(overlayCam);
+
+            MelonLogger.Msg("finished setting up overlay camera");
+        }
+
+        private void ApplyOverrender(System.Collections.Generic.List<GameObject> objects)
+        {
+            SetupOverlayCamera();
+            overlayCam.gameObject.SetActive(true);
+
+            foreach (GameObject obj in objects)
+            {
+                if (obj == null) continue;
+
+                int originalLayer = obj.layer;
+                wallHackOriginalLayers[obj] = originalLayer;
+
+                obj.layer = overlayLayer;
+            }
+
+            MelonLogger.Msg($"changed layers for {wallHackOriginalLayers.Count} objects");
+        }
+
+        private void RestoreOriginalLayers()
+        {
+            SetupOverlayCamera();
+            overlayCam.gameObject.SetActive(false);
+
+            foreach (var entry in wallHackOriginalLayers)
+            {
+                if (entry.Key != null)
+                    entry.Key.layer = entry.Value;
+            }
+
+            wallHackOriginalLayers.Clear();
+            MelonLogger.Msg("restored layers");
+        }
+
+        private bool HasSpeakerGameObject1(GameObject obj)
+        {
+            foreach (Transform i in obj.transform)
+            {
+                if (i.gameObject.name == "Speaker") return true;
+                if (HasSpeakerGameObject1(i.gameObject)) return true;
+            }
+            return false;
+        }
+
+        private bool HasSpeakerGameObject(GameObject obj)
+        {
+            foreach (Transform child in obj.GetComponentsInChildren<Transform>(true))
+            {
+                if (child.gameObject.name == "Speaker") return true;
+            }
+            return false;
+        }
+
+        private int GetSelfPlayerID()
+        {
+            int playerId = -1;
+
+            System.Collections.Generic.List<NetworkedLocomotionPlayer> realPlayers = new System.Collections.Generic.List<NetworkedLocomotionPlayer>();
+            System.Collections.Generic.List<NetworkedLocomotionPlayer> currentPlayers = new System.Collections.Generic.List<NetworkedLocomotionPlayer>();
+
+            foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>()) //im fuckin tired asf rn and i know this is terrible but i really couldnt care less so ill probably (not) improve it later
+            {
+                currentPlayers.Add(player);
+            }
+
+            foreach(NetworkedLocomotionPlayer player in currentPlayers)
+            {
+                try
+                {
+                    if (player._cachedPlayerID < 0)
+                    {
+                        continue;
+                    }
+                    realPlayers.Add(player);
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Msg(ex);
+                }
+            }
+
+            foreach(NetworkedLocomotionPlayer player in realPlayers)
+            {
+                if (HasSpeakerGameObject(player.gameObject))
+                {
+                    playerId = player._cachedPlayerID;
+                    MelonLogger.Msg($"assuming self id is {playerId}");
+                }
+            }
+
+            return playerId;
+        }
+
+        private bool CheckIfCrewmateIsSelf(GameObject obj, int selfPlayerId)
+        {
+            NetworkedLocomotionPlayer current = obj.GetComponentInParent<NetworkedLocomotionPlayer>();
+            if (current._cachedPlayerID == selfPlayerId)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        private System.Collections.Generic.List<GameObject> GetChildrenWithRenderers(GameObject parent)
+        {
+            System.Collections.Generic.List<GameObject> objectsWithRenderers = new System.Collections.Generic.List<GameObject>();
+
+            foreach (Renderer renderer in parent.GetComponentsInChildren<Renderer>(true))
+            {
+                objectsWithRenderers.Add(renderer.gameObject);
+            }
+
+            return objectsWithRenderers;
+        }
+
+
+        private System.Collections.Generic.List<GameObject> GetCrewmateBodies()
+        {
+            System.Collections.Generic.List<GameObject> crewmateObjectsList = new System.Collections.Generic.List<GameObject>();
+
+            int selfPlayerId = GetSelfPlayerID();
+            MelonLogger.Msg($"ASsuming self player id is {selfPlayerId}");
+
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (obj.name.Contains("CrewmatePhysics"))
+                {
+                    if (!CheckIfCrewmateIsSelf(obj, selfPlayerId))
+                    {
+                        crewmateObjectsList.Add(obj);
+                    }
+                }
+            }
+            return crewmateObjectsList;
+        }
+
+        private void DisableWallHack()
+        {
+            MelonLogger.Msg("removing wallhacks");
+            //RemoveWallHacks();
+            RestoreOriginalLayers();
+        }
+
+        private void EnableWallHack()
+        {
+            System.Collections.Generic.List<GameObject> crewmates = GetCrewmateBodies();
+            int wallHackCount = 0;
+            System.Collections.Generic.List<GameObject> gameObjectsToUpdate = new System.Collections.Generic.List<GameObject>();
+
+            /*foreach(GameObject obj in crewmates)
+            {
+                MelonLogger.Msg($"applying wallhack to ${obj.name}");
+                ApplyWallHackToObject(obj);
+                wallHackCount++;
+            }*/
+            SetupOverlayCamera();
+
+            foreach (GameObject obj in crewmates)
+            {
+                foreach (GameObject i in GetChildrenWithRenderers(obj))
+                {
+                    gameObjectsToUpdate.Add(i);
+                }
+            }
+
+            //ApplyOverrender(crewmates);
+            ApplyOverrender(gameObjectsToUpdate);
+
+            MelonLogger.Msg($"Enabled wallhacks for ${wallHackCount} objects");
+        }
+
+
 
         private void InstanceChangedCheck()
         {
