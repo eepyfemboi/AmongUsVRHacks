@@ -7,6 +7,8 @@ a barely working melonloader hack client for amongus vr (only works for steamvr/
 
 ### This is a melonloader mod, meaning you have to be using melonloader to run it. To install melonloader, click here: [https://melonwiki.xyz/](https://melonwiki.xyz/)
 
+### I'm planning on making an auto-installer that you can run to install melonloader and the mod automatically, but for now, you have to do all of it manually.
+
 current features include:
 - no kill cooldown (makes you able to kill everyone instantly while imposter) -- Press "K" to toggle
 - no-clip (disabling colliders and the blinding box - currently only works on skeld right now) -- Press "C" to toggle
