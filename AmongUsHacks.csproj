@@ -52,6 +52,9 @@
     <Reference Include="Il2CppSG.FusionSimulator">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.FusionSimulator.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppSG.GlobalEvents">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.GlobalEvents.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>

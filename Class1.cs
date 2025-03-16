@@ -22,6 +22,25 @@ using Il2CppSG.Airlock.Util;
 using UnityEngine.Rendering;
 using Il2Cpp;
 using UnityEngine.Rendering.Universal;
+using Il2CppSG.Airlock.Minigames;
+using Il2CppSG.Airlock.Minimap;
+using Il2CppSG.Airlock.Blindbox;
+using Il2CppSG.Airlock.Doors;
+using Il2CppSG.Airlock.GlobalEvents;
+using Il2CppSG.Airlock.Sabotage;
+using Il2CppSG.Airlock.Settings;
+using Il2CppSG.Airlock.Utilities;
+using Il2CppSG.Airlock.Utility;
+using Il2CppSG.Airlock.Venting;
+using Il2CppSG.GlobalEvents.Events;
+using System.Runtime.CompilerServices;
+using Il2CppSG.Airlock.UI.DebugMenu;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 
 namespace AmongUsHacks
 {
@@ -78,12 +97,141 @@ namespace AmongUsHacks
         private MelonPreferences_Entry<KeyCode>? imposterToggleKey_config;
 
 
+
+        private KeyCode tempForceCompleteTaskKey = KeyCode.LeftBracket;
+        private KeyCode tempForceCompleteMinigameKey = KeyCode.RightBracket;
+        private KeyCode tempForceCompleteTaskViaInvokeKey = KeyCode.Semicolon;
+
+
+        private bool killCoolDownActive = false;
+        private KeyCode tempForceKillCooldownLowerKey = KeyCode.K;
+        NetworkedKillBehaviour? killManager = null;
+
+        private KeyCode tempForceImposterKeyCode = KeyCode.F;
+
+
+
+
+
+
+        private static readonly string VersionUrl = "https://sleepie.dev/amongusvr/mod/version";
+        private static readonly string DownloadUrl = "https://sleepie.dev/amongusvr/mod/latest/AmongUsHacks.dll";
+        private static readonly string ModFileName = "AmongUsHacks.dll";
+        private static readonly string ModFolderPath = "Mods";
+
+        private static readonly string CurrentVersion = "1.0.0";
+        private static readonly string UserAgent = "AmongUsVR-ModUpdater/1.0 (Windows; MelonLoader)";
+
+
+
+
+
+
+
         private GameObject? newInstanceDetectorObject;
+
+
+
+
+
+
+
+
+        private async Task CheckForUpdates()
+        {
+            try
+            {
+                using HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+
+                string latestVersion = await client.GetStringAsync(VersionUrl);
+                latestVersion = latestVersion.Trim();
+
+                if (latestVersion != CurrentVersion)
+                {
+                    MelonLogger.Msg($"New version available: {latestVersion} (Current: {CurrentVersion})");
+                    await DownloadAndUpdate();
+                }
+                else
+                {
+                    MelonLogger.Msg("You are running the latest version.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Update check failed: {ex.Message}");
+            }
+        }
+
+        private async Task DownloadAndUpdate()
+        {
+            try
+            {
+                string modFilePath = Path.Combine(ModFolderPath, ModFileName);
+                string tempFilePath = modFilePath + ".new";
+                string oldFilePath = modFilePath + ".old";
+                string batchFilePath = Path.Combine(ModFolderPath, "UpdateMod.bat");
+
+                MelonLogger.Msg("Downloading new mod version...");
+                using HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+                byte[] data = await client.GetByteArrayAsync(DownloadUrl);
+                await File.WriteAllBytesAsync(tempFilePath, data);
+
+                File.WriteAllText(batchFilePath, $@"
+@echo off
+:retry
+timeout /t 3 >nul
+del ""{oldFilePath}""
+move ""{modFilePath}"" ""{oldFilePath}""
+move ""{tempFilePath}"" ""{modFilePath}""
+del ""{batchFilePath}""
+start """" ""{Process.GetCurrentProcess().MainModule.FileName}""
+exit
+");
+
+                MelonLogger.Msg("Update downloaded! Restarting game to apply changes...");
+                RestartGameWithBatch(batchFilePath);
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Update failed: {ex.Message}");
+            }
+        }
+
+        private void RestartGameWithBatch(string batchFilePath)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = batchFilePath,
+                    UseShellExecute = true,
+                    CreateNoWindow = true
+                });
+
+                MelonLogger.Msg("Game restarting...");
+                Application.Quit();
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Failed to restart: {ex.Message}");
+            }
+        }
+
+
+
+
+
+
+
+
 
 
         public override void OnInitializeMelon()
         {
             LoadConfig();
+            Task.Run(CheckForUpdates);
 
             MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source at https://github.com/eepyfemboi/AmongUsVRHacks");
             LoadBlacklist();
@@ -126,6 +274,10 @@ namespace AmongUsHacks
         {
             HandleKeybinds();
             InstanceChangedCheck();
+            if (killCoolDownActive)
+            {
+                DoKillCooldownThingie();
+            }
         }
 
         private void HandleKeybinds()
@@ -145,6 +297,28 @@ namespace AmongUsHacks
             if (Input.GetKeyDown(wallHackToggleKey))
             {
                 ToggleWallHack();
+            }
+            if (Input.GetKeyDown(tempForceCompleteTaskKey))
+            {
+                DoForceCompleteTask();
+            }
+            if (Input.GetKeyDown(tempForceCompleteMinigameKey))
+            {
+                DoForceCompleteMinigame();
+            }
+            if (Input.GetKeyDown(tempForceCompleteTaskViaInvokeKey))
+            {
+                DoForceCompleteViaInvoke();
+            }
+            if (Input.GetKeyDown(tempForceKillCooldownLowerKey))
+            {
+                //ReduceKillCooldown();
+                ToggleKillCooldown();
+            }
+            if (Input.GetKeyDown(tempForceImposterKeyCode))
+            {
+                TestForceImposter();
+                //ToggleForceImposter
             }
         }
 
@@ -217,6 +391,35 @@ namespace AmongUsHacks
 
             wallHackEnabled = !wallHackEnabled;
             MelonLogger.Msg($"Toggled wallhack to {wallHackEnabled}");
+        }
+
+        private void ToggleKillCooldown()
+        {
+            MelonLogger.Msg($"Toggling kill cooldown to {!killCoolDownActive}");
+
+            killCoolDownActive = !killCoolDownActive;
+
+            MelonLogger.Msg($"Toggled kill cooldown to {killCoolDownActive}");
+        }
+
+
+        private void RefreshKillManager()
+        {
+            if (killManager == null)
+            {
+                killManager = GameObject.FindObjectOfType<NetworkedKillBehaviour>();
+            }
+        }
+
+        private void DoKillCooldownThingie()
+        {
+            RefreshKillManager();
+
+            if (killManager != null && killManager._killCooldown > 1)
+            {
+                killManager._killCooldown = 0.1f;
+                MelonLogger.Msg("changed kill cooldown");
+            }
         }
 
 
@@ -759,10 +962,152 @@ namespace AmongUsHacks
                 }
             }
             newInstanceDetectorObject = new GameObject();
-            speedEnabled = false;
+            if (speedEnabled)
+            {
+                speedEnabled = false;
+                TogglePlayerSpeed();
+            }
+            if (collidersToggled)
+            {
+                collidersToggled = false;
+                ToggleColliders();
+            }
+            if (imposterEnabled)
+            {
+                imposterEnabled = false;
+                ToggleShowImposters();
+            }
+            if (wallHackEnabled)
+            {
+                wallHackEnabled = false;
+                ToggleWallHack();
+            }
+            /*speedEnabled = false;
             collidersToggled = false;
             imposterEnabled = false;
+            wallHackEnabled = false;*/
             MelonLogger.Msg("Instance change detected! Resetting values.");
+        }
+
+        private System.Collections.Generic.List<MinigameConsole> GetUserTasks()
+        {
+            System.Collections.Generic.List<MinigameConsole> tasks = new System.Collections.Generic.List<MinigameConsole>();
+
+            foreach (MinigameConsole obj in GameObject.FindObjectsOfType<MinigameConsole>(true))
+            {
+                if (obj.gameObject.activeSelf)
+                {
+                    tasks.Add(obj);
+                }
+            }
+
+            return tasks;
+        }
+
+        private void DoForceCompleteTask()
+        {
+            System.Collections.Generic.List<MinigameConsole> tasks = GetUserTasks();
+            int forced = 0;
+
+            foreach (MinigameConsole obj in tasks)
+            {
+                obj.ForceCompleteTask();
+                forced++;
+            }
+
+            MelonLogger.Msg($"force completed {forced} tasks");
+        }
+
+        private void DoForceCompleteMinigame()
+        {
+            System.Collections.Generic.List<MinigameConsole> tasks = GetUserTasks();
+            int forced = 0;
+
+            foreach (MinigameConsole obj in tasks)
+            {
+                obj.ForceCompleteMinigame();
+                forced++;
+            }
+
+            MelonLogger.Msg($"force completed {forced} minigames");
+        }
+
+        private void DoForceCompleteViaInvoke()
+        {
+            System.Collections.Generic.List<MinigameConsole> tasks = GetUserTasks();
+            int forced = 0;
+
+            foreach (MinigameConsole obj in tasks)
+            {
+                obj.OnComplete.Invoke();
+                forced++;
+            }
+
+            MelonLogger.Msg($"force completed {forced} minigames");
+        }
+
+
+        private void ReduceKillCooldown()
+        {
+            NetworkedKillBehaviour killManager = GameObject.FindObjectOfType<NetworkedKillBehaviour>();
+            killManager._killCooldown = 1;
+
+            //killManager.SetMaxCooldown(1);
+        }
+
+
+        private PlayerRef GetSelfPlayerRef()
+        {
+            int playerSelfId = GetSelfPlayerID();
+            PlayerRef playerRef = (PlayerRef)playerSelfId;//new PlayerRef();
+            return playerRef;
+            //playerRef.PlayerId = playerSelfId;
+
+            //System.Collections.Generic.List<PlayerRef> players = new System.Collections.Generic.List<PlayerRef>();
+
+            // Find all objects of type PlayerRef in the scene
+            //foreach (PlayerRef player in Object.FindObjectsOfType<PlayerRef>())
+            //{
+            //    players.Add(player);
+            //}
+
+            //return players;
+            //PlayerRef playerRef;
+
+            //playerRef.
+            //playerRef.PlayerId
+        }
+
+        private void TestForceImposter()
+        {
+
+            NetworkedKillBehaviour killManager = GameObject.FindObjectOfType<NetworkedKillBehaviour>();
+            PlayerRef playerRef = GetSelfPlayerRef();
+            killManager.AlterRole(GameRole.Imposter, playerRef);
+        }
+
+
+        private void TestingThingie()
+        {
+            MinigamePlayer e1 = new MinigamePlayer();
+            e1.BeginTask();
+            MinigameManager e2 = new MinigameManager();
+            //e2.AssignedTasks
+            //e2.task
+            //e1.ForceCompleteTask()
+            //e2._minigames
+            //e2.gameUIDToConsole
+            MinigameConsole e3 = new MinigameConsole();
+            e3.ForceCompleteMinigame();
+            e3.ForceCompleteTask();
+            //e3.OnComplete.Invoke()
+            NetworkedLocomotionPlayer e4 = new NetworkedLocomotionPlayer();
+            //e4.OnIsAliveChange
+            NetworkedKillBehaviour e5 = new NetworkedKillBehaviour();
+            //e5.
+            //e4.TaskPlayer.AssignedTasks
+            //e4._playerState._IsAlive
+            //PlayerState
         }
     }
 }
