@@ -40,6 +40,8 @@ using System.IO;
 using System.Net.Http;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using HarmonyLib;
+using Il2CppPhoton.Voice.Fusion;
 
 
 namespace AmongUsHacks
@@ -108,6 +110,11 @@ namespace AmongUsHacks
         NetworkedKillBehaviour? killManager = null;
 
         private KeyCode tempForceImposterKeyCode = KeyCode.F;
+
+        private bool forceUnignoreGhosts = false;
+        private KeyCode forceUnignoreGhostsKey = KeyCode.U;
+        private int forceUnignoreGhostsFrame = 0;
+        private int forceUnignoreGhostsUpdateFrameInterval = 100; // for anyone wondering why im doing it this way, its bcuz i dont wanna impact the games performance by running a potentially straining function every frame, so i'll do it every 5 frames instead
 
 
 
@@ -278,6 +285,10 @@ exit
             {
                 DoKillCooldownThingie();
             }
+            if (forceUnignoreGhosts)
+            {
+                DoForceUnignoreGhostsThingie();
+            }
         }
 
         private void HandleKeybinds()
@@ -320,9 +331,34 @@ exit
                 TestForceImposter();
                 //ToggleForceImposter
             }
+            if (Input.GetKeyDown(forceUnignoreGhostsKey))
+            {
+                ToggleForceUnignoreGhosts();
+            }
+        }
+        
+
+        private void DoForceUnignoreGhostsThingie()
+        {
+            if (forceUnignoreGhostsFrame > forceUnignoreGhostsUpdateFrameInterval)
+            {
+                forceUnignoreGhostsFrame = 0;
+                UnignoreGhosts();
+            } else
+            {
+                forceUnignoreGhostsFrame++;
+            }
         }
 
 
+        private void ToggleForceUnignoreGhosts()
+        {
+            MelonLogger.Msg($"Toggling force unignore ghosts to {!forceUnignoreGhosts}");
+
+            forceUnignoreGhosts = !forceUnignoreGhosts;
+
+            MelonLogger.Msg($"Toggled force unignore ghosts to {forceUnignoreGhosts}");
+        }
 
         private void ToggleColliders()
         {
@@ -477,7 +513,7 @@ exit
 
         private void HideImposters()
         {
-            foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>())
+            foreach (NetworkedLocomotionPlayer player in GetNetworkedLocomotionPlayers())
             {
                 try
                 {
@@ -500,7 +536,7 @@ exit
             if (roleManager.gameRoleToPlayerIds.TryGetValue(GameRole.Imposter, out Il2CppSystem.Collections.Generic.List<int> imposterPlayerIDs))
             {
                 MelonLogger.Msg($"Raw Dict: {roleManager.gameRoleToPlayerIds.ToString()}  Gathered Player IDs: {imposterPlayerIDs}");
-                foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>())
+                foreach (NetworkedLocomotionPlayer player in GetNetworkedLocomotionPlayers())
                 {
                     try
                     {
@@ -827,19 +863,11 @@ exit
             return false;
         }
 
-        private int GetSelfPlayerID()
+        private System.Collections.Generic.List<NetworkedLocomotionPlayer> GetRealPlayers()
         {
-            int playerId = -1;
-
             System.Collections.Generic.List<NetworkedLocomotionPlayer> realPlayers = new System.Collections.Generic.List<NetworkedLocomotionPlayer>();
-            System.Collections.Generic.List<NetworkedLocomotionPlayer> currentPlayers = new System.Collections.Generic.List<NetworkedLocomotionPlayer>();
 
-            foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>()) //im fuckin tired asf rn and i know this is terrible but i really couldnt care less so ill probably (not) improve it later
-            {
-                currentPlayers.Add(player);
-            }
-
-            foreach(NetworkedLocomotionPlayer player in currentPlayers)
+            foreach (NetworkedLocomotionPlayer player in GetNetworkedLocomotionPlayers())
             {
                 try
                 {
@@ -854,6 +882,14 @@ exit
                     MelonLogger.Msg(ex);
                 }
             }
+            return realPlayers;
+        }
+
+        private int GetSelfPlayerID()
+        {
+            int playerId = -1;
+
+            System.Collections.Generic.List<NetworkedLocomotionPlayer> realPlayers = GetRealPlayers();
 
             foreach(NetworkedLocomotionPlayer player in realPlayers)
             {
@@ -944,6 +980,20 @@ exit
             ApplyOverrender(gameObjectsToUpdate);
 
             MelonLogger.Msg($"Enabled wallhacks for ${wallHackCount} objects");
+        }
+
+
+
+        private System.Collections.Generic.List<NetworkedLocomotionPlayer> GetNetworkedLocomotionPlayers()
+        {
+            System.Collections.Generic.List<NetworkedLocomotionPlayer> players = new System.Collections.Generic.List<NetworkedLocomotionPlayer>();
+
+            foreach (NetworkedLocomotionPlayer player in GameObject.FindObjectsOfType<NetworkedLocomotionPlayer>())
+            {
+                players.Add(player);
+            }
+
+            return players;
         }
 
 
@@ -1055,6 +1105,72 @@ exit
             //killManager.SetMaxCooldown(1);
         }
 
+        private GameObject? GetPlayerGhostObject(GameObject player)
+        {
+            foreach (Transform transform in player.GetComponentsInChildren<Transform>())
+            {
+                if (transform.gameObject.name.Contains("ghost", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return transform.gameObject;
+                }
+            }
+            return null;
+        }
+
+        private GameObject? GetPlayerUINameTag(GameObject player)
+        {
+            foreach (Transform transform in player.GetComponentsInChildren<Transform>())
+            {
+                if (transform.gameObject.name.Contains("ui", System.StringComparison.OrdinalIgnoreCase) && transform.gameObject.name.Contains("nametag", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return transform.gameObject;
+                }
+            }
+            return null;
+        }
+
+        private void SwitchPlayerToAliveVoiceChatGroup(GameObject player)
+        {
+            VoiceChatManager manager = UnityEngine.Object.FindObjectOfType<VoiceChatManager>();
+            foreach (VoiceChatActivator vcAct in player.GetComponentsInChildren<VoiceChatActivator>())
+            {
+                AudioSource audioSource = vcAct.gameObject.GetComponent<AudioSource>();
+                audioSource.outputAudioMixerGroup = manager._aliveVoiceChatGroup;
+            }
+        }
+
+        private void UnignorePlayer(NetworkedLocomotionPlayer player)
+        {
+            GameObject? playerGhostObj = GetPlayerGhostObject(player.gameObject);
+            if (playerGhostObj != null)
+            {
+                foreach (SkinnedMeshRenderer renderer in playerGhostObj.GetComponentsInChildren<SkinnedMeshRenderer>())
+                {
+                    renderer.enabled = true;
+                }
+            }
+            GameObject? nameTag = GetPlayerUINameTag(player.gameObject);
+            if (nameTag != null)
+            {
+                nameTag.SetActive(true);
+            }
+            SwitchPlayerToAliveVoiceChatGroup(player.gameObject);
+        }
+
+        private void UnignoreGhosts()
+        {
+            System.Collections.Generic.List<NetworkedLocomotionPlayer> players = GetNetworkedLocomotionPlayers();
+            int selfPlayerId = GetSelfPlayerID();
+            foreach (NetworkedLocomotionPlayer player in GetRealPlayers())
+            {
+                if (player._cachedPlayerID != selfPlayerId)
+                {
+                    UnignorePlayer(player);
+                    MelonLogger.Msg($"Unignoring player: {player._nameTag._storedName}");
+                }
+            }
+        }
+
 
         private PlayerRef GetSelfPlayerRef()
         {
@@ -1108,6 +1224,10 @@ exit
             //e4.TaskPlayer.AssignedTasks
             //e4._playerState._IsAlive
             //PlayerState
+            VoiceChatManager e6 = new VoiceChatManager();
+            //e6._voiceBridgePrefab
+            AirlockVoiceBridge e7 = new AirlockVoiceBridge();
+            //e7.
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -45,6 +45,15 @@
     </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppPhotonVoice">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppPhotonVoice.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppPhotonVoice.API">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppPhotonVoice.API.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppPhotonVoice.Fusion">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppPhotonVoice.Fusion.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSG.Airlock">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.Airlock.dll</HintPath>
