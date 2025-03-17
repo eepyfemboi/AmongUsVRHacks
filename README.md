@@ -1,5 +1,5 @@
 # AmongUsVRHacks
-a melonloader hack client for amongus vr (only works for steamvr/pc)
+a melonloader hack client for amongus vr (only officially works for steamvr/pc, might work on quest with lemonloader)
 
 ## THIS IS FOR EDUCATIONAL PURPOSES ONLY
 
