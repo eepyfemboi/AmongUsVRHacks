@@ -16,12 +16,15 @@ current features include:
 - force show imposters (this only works if you're the host i think) -- Press "I" to toggle
 - WallHacks (allows you to see players through walls) -- Press "W" to toggle
 - force imposter (only works if you're the host) -- Press "F" to become imposter while you're the host
+- unignore ghosts (currently only half works. you can see ghosts but you cant hear them) -- Press "U" to toggle
+- kill everyone functions -- Press DownArrow to toggle usage, then press numbers 1-6 on your keyboard to use different functions
+- RPC websocket (lets you see how many people are online with the client by going to https://amongusvr.sleepie.dev/online and you can see how many times people have used the client by going to https://amongusvr.sleepie.dev/startups :3)
 - auto updater
 
 planned features:
 - kill alerts (alerts you when someone kills someone else)
 - minigame/task autocompleter
-- unignore ghosts (will allow you to see and talk to dead players)
+- ~~unignore ghosts (will allow you to see and talk to dead players)~~
 - dead interact (will allow you to interact with stuff that you normally cant interact with when you're dead, i.e. voting, sabotages, etc)
 - teleporter (will let you teleport to other players)
 - alwayslight (allows you to see when the lights are out or the view distance is turned down)
