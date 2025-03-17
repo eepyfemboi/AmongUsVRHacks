@@ -37,4 +37,5 @@ if you want to suggest new features then open an issue and i'll get to it
 if you dont like my code quality then dont open issues send prs
 
 also dont use it for malicious purposes pls
-  
+
+you might be able to use this on quest with lemonloader, but im not sure and i wont fix any issues arising from this usage. https://github.com/LemonLoader/MelonLoader/wiki
