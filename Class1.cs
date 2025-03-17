@@ -42,6 +42,17 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using HarmonyLib;
 using Il2CppPhoton.Voice.Fusion;
+using Il2CppSG.Platform.Steam;
+using Il2CppSG.Platform;
+using Il2CppSG.PlayerLoops;
+using Il2CppSteamworks;
+using Il2CppSG.SkuBuild.Steam;
+using Il2CppValve.VR;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 
 namespace AmongUsHacks
@@ -114,10 +125,13 @@ namespace AmongUsHacks
         private bool forceUnignoreGhosts = false;
         private KeyCode forceUnignoreGhostsKey = KeyCode.U;
         private int forceUnignoreGhostsFrame = 0;
-        private int forceUnignoreGhostsUpdateFrameInterval = 100; // for anyone wondering why im doing it this way, its bcuz i dont wanna impact the games performance by running a potentially straining function every frame, so i'll do it every 5 frames instead
+        private int forceUnignoreGhostsUpdateFrameInterval = 100; // for anyone wondering why im doing it this way, its bcuz i dont wanna impact the games performance by running a potentially straining function every frame, so i'll do it every 100 frames instead
 
 
-
+        private KeyCode testKillEveryoneActivatorKey = KeyCode.DownArrow;
+        private bool testKillEveryonePrimed = false;
+        private KeyCode testKillEveryoneUseSelfKey = KeyCode.UpArrow;
+        private bool testKillEveryoneUseSelf = false;
 
 
 
@@ -126,12 +140,15 @@ namespace AmongUsHacks
         private static readonly string ModFileName = "AmongUsHacks.dll";
         private static readonly string ModFolderPath = "Mods";
 
-        private static readonly string CurrentVersion = "1.0.0";
-        private static readonly string UserAgent = "AmongUsVR-ModUpdater/1.0 (Windows; MelonLoader)";
+        private static readonly string CurrentVersion = "1.0.1";
+        private static readonly string UserAgent = "AmongUsVRHacks/1.0 (Windows; MelonLoader)";
 
 
 
-
+        private static readonly System.Uri RPCWebSocketURI = new System.Uri("wss://amongusvr.sleepie.dev:443/rpc");
+        private ClientWebSocket? webSocket;
+        private CancellationTokenSource? cancellationTokenSource;
+        private Task? receiveTask;
 
 
 
@@ -229,6 +246,52 @@ exit
 
 
 
+        private async void ConnectWebSocket()
+        {
+            try
+            {
+                webSocket = new ClientWebSocket();
+                cancellationTokenSource = new CancellationTokenSource();
+
+                webSocket.Options.SetRequestHeader("User-Agent", UserAgent);
+
+                await webSocket.ConnectAsync(RPCWebSocketURI, CancellationToken.None);
+                MelonLogger.Msg("Connected to RPC WebSocket!");
+
+                receiveTask = ReceiveMessages();
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"RPC WebSocket connection error: {ex.Message}");
+            }
+        }
+
+        private async Task ReceiveMessages()
+        {
+            byte[] buffer = new byte[1024];
+            while (webSocket.State == WebSocketState.Open)
+            {
+                try
+                {
+                    WebSocketReceiveResult result = await webSocket.ReceiveAsync(new System.ArraySegment<byte>(buffer), cancellationTokenSource.Token);
+                    string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                    MelonLogger.Msg($"Received: {message}");
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Error($"RPC WebSocket receive error: {ex.Message}");
+                    break;
+                }
+            }
+            Reconnect();
+        }
+
+        private async void Reconnect()
+        {
+            MelonLogger.Warning("Reconnecting to RPC WebSocket...");
+            await Task.Delay(5000);
+            ConnectWebSocket();
+        }
 
 
 
@@ -240,8 +303,10 @@ exit
             LoadConfig();
             Task.Run(CheckForUpdates);
 
-            MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source at https://github.com/eepyfemboi/AmongUsVRHacks");
+            MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source code at https://github.com/eepyfemboi/AmongUsVRHacks");
             LoadBlacklist();
+
+            ConnectWebSocket();
         }
 
         private void LoadConfig()
@@ -263,7 +328,7 @@ exit
             imposterToggleKey_config = settings.CreateEntry("ImposterToggleKey", imposterToggleKey, "Toggle Show Imposters Keybind");
 
 
-            remoteBlacklistURL = remoteBlacklistURL_config.Value;
+            //remoteBlacklistURL = remoteBlacklistURL_config.Value;
             doRemoteBlacklistUpdate = doRemoteBlacklistUpdate_config.Value;
 
             collidersToggleKey = collidersToggleKey_config.Value;
@@ -288,6 +353,10 @@ exit
             if (forceUnignoreGhosts)
             {
                 DoForceUnignoreGhostsThingie();
+            }
+            if (testKillEveryonePrimed)
+            {
+                DoKillEveryoneTestThingie();
             }
         }
 
@@ -334,6 +403,17 @@ exit
             if (Input.GetKeyDown(forceUnignoreGhostsKey))
             {
                 ToggleForceUnignoreGhosts();
+            }
+            if (Input.GetKeyDown(testKillEveryoneActivatorKey))
+            {
+                //DoKillEveryoneTestThingie();
+                testKillEveryonePrimed = !testKillEveryonePrimed;
+                MelonLogger.Msg($"Toggled kill everyone primer to ${testKillEveryonePrimed}");
+            }
+            if (Input.GetKeyDown(testKillEveryoneUseSelfKey))
+            {
+                testKillEveryoneUseSelf = !testKillEveryoneUseSelf;
+                MelonLogger.Msg($"toggled kill everyone use self to ${testKillEveryoneUseSelf}");
             }
         }
         
@@ -1195,6 +1275,153 @@ exit
             //playerRef.PlayerId
         }
 
+        private void TestKillEveryoneMethod1()
+        {
+            RefreshKillManager();
+
+            System.Collections.Generic.List<AirlockPeer> peers = new System.Collections.Generic.List<AirlockPeer>();
+            System.Collections.Generic.List<PlayerState> players = new System.Collections.Generic.List<PlayerState>();
+            //PlayerState
+            //killManager.killpl
+
+            foreach (AirlockPeer peer in UnityEngine.Object.FindObjectsOfType<AirlockPeer>())
+            {
+                peers.Add(peer);
+                MelonLogger.Msg($"Adding peer: {peer.PeerID}");
+            }
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                players.Add(player);
+                MelonLogger.Msg($"Adding player: {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+
+            PlayerRef selfPlayerRef = GetSelfPlayerRef();
+
+            if (peers.Count == players.Count)
+            {
+                foreach (PlayerState player in players)
+                {
+                    foreach (AirlockPeer peer in peers)
+                    {
+                        if (player.PlayerId == peer.PeerID)
+                        {
+                            killManager.KillPlayer(peer, player, selfPlayerRef, false);
+                            MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+                        }
+                    }
+                }
+            } else
+            {
+                foreach (PlayerState player in players)
+                {
+                    foreach (AirlockPeer peer in peers)
+                    {
+                        killManager.KillPlayer(peer, player, selfPlayerRef, false);
+                        MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+                    }
+                }
+            }
+        }
+
+        private void TestKillEveryoneMethod2()
+        {
+            Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
+            if (testKillEveryoneUseSelf)
+            {
+                selfPlayerRef.value = GetSelfPlayerRef();
+            }
+
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.KillPlayer(true, true, true, selfPlayerRef, false);
+                MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+        }
+
+        private void TestKillEveryoneMethod3()
+        {
+            Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
+            if (testKillEveryoneUseSelf)
+            {
+                selfPlayerRef.value = GetSelfPlayerRef();
+            }
+
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.KillPlayer(true, false, true, selfPlayerRef, false);
+                MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+        }
+
+        private void TestKillEveryoneMethod4()
+        {
+            Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
+            if (testKillEveryoneUseSelf)
+            {
+                selfPlayerRef.value = GetSelfPlayerRef();
+            }
+
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.KillPlayer(false, true, true, selfPlayerRef, false);
+                MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+        }
+
+        private void TestKillEveryoneMethod5()
+        {
+            Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
+            if (testKillEveryoneUseSelf)
+            {
+                selfPlayerRef.value = GetSelfPlayerRef();
+            }
+
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.KillPlayer(true, true, false, selfPlayerRef, false);
+                MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+        }
+
+        private void TestKillEveryoneMethod6()
+        {
+            Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
+            if (testKillEveryoneUseSelf)
+            {
+                selfPlayerRef.value = GetSelfPlayerRef();
+            }
+
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.KillPlayer(false, false, false, selfPlayerRef, false);
+                MelonLogger.Msg($"Killed {player.AcceptedName} {player.CachedName} {player.PlayerId}");
+            }
+        }
+
+        private void DoKillEveryoneTestThingie()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1) | Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                TestKillEveryoneMethod1();
+            } else if (Input.GetKeyDown(KeyCode.Alpha2) | Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                TestKillEveryoneMethod2();
+            } else if (Input.GetKeyDown(KeyCode.Alpha3) | Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                TestKillEveryoneMethod3();
+            } else if (Input.GetKeyDown(KeyCode.Alpha4) | Input.GetKeyDown(KeyCode.Keypad4))
+            {
+                TestKillEveryoneMethod4();
+            } else if (Input.GetKeyDown(KeyCode.Alpha5) | Input.GetKeyDown(KeyCode.Keypad5))
+            {
+                TestKillEveryoneMethod5();
+            } else if (Input.GetKeyDown(KeyCode.Alpha6) | Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                TestKillEveryoneMethod6();
+            }
+        }
+
+
         private void TestForceImposter()
         {
 
@@ -1202,6 +1429,18 @@ exit
             PlayerRef playerRef = GetSelfPlayerRef();
             killManager.AlterRole(GameRole.Imposter, playerRef);
         }
+
+        /*[HarmonyPatch(typeof(SteamFriends), "GetPersonaName")]
+        public class Patch_GetPersonaName
+        {
+            public static bool Prefix(ref string __result)
+            {
+                string fakeUsername = "test1";
+                __result = fakeUsername;
+                MelonLogger.Msg($"Spoofing Steam Username: {fakeUsername}");
+                return false;
+            }
+        }*/
 
 
         private void TestingThingie()
@@ -1221,6 +1460,7 @@ exit
             NetworkedLocomotionPlayer e4 = new NetworkedLocomotionPlayer();
             //e4.OnIsAliveChange
             NetworkedKillBehaviour e5 = new NetworkedKillBehaviour();
+            //e5.KillPlayer
             //e5.
             //e4.TaskPlayer.AssignedTasks
             //e4._playerState._IsAlive
@@ -1229,6 +1469,33 @@ exit
             //e6._voiceBridgePrefab
             AirlockVoiceBridge e7 = new AirlockVoiceBridge();
             //e7.
+            /* i wanna work on a ban bypasser and name spoofer so im experimenting with steam stuff here lol */
+            //SteamEntitlement e8 = new SteamEntitlement();
+            //e8.
+            //SteamAPI
+            //SteamClient
+            //SteamDLCAddOns
+            //SteamManager
+            //SteamNetworking
+            //SteamNetworkingIdentity
+            //SteamNetworkingUtils
+            //SteamPhotonAuthentication
+            //SteamSku
+            //SteamUser
+            //SteamUtils
+            //SteamVR_Utils
+            //SteamVR
+            //SteamVR_Action
+            //SteamVR_Utils
+            //CSteamAPIContext
+            //CSteamID
+
+            
+
+
+            //HSteamUser e8 = Il2CppSteamworks.SteamAPI.GetHSteamUser();
+            //e8.m_HSteamUser.
+            //SteamAPI.GetHSteamPipe().m_HSteamPipe.
         }
     }
 }

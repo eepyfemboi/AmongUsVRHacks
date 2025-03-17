@@ -64,6 +64,24 @@
     <Reference Include="Il2CppSG.GlobalEvents">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.GlobalEvents.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppSG.Platform">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSG.Platform.Steam">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.Platform.Steam.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSG.PlayerLoops">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.PlayerLoops.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSG.SkuBuild.Steam">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSG.SkuBuild.Steam.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSteamVR">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSteamVR.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSteamVR_Actions">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSteamVR_Actions.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
