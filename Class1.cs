@@ -52,7 +52,7 @@ namespace AmongUsHacks
 
 
         private bool blacklistUpdated = false;
-        private string remoteBlacklistURL = "https://raw.githubusercontent.com/eepyfemboi/AmongUsVRHacks/refs/heads/main/dynamic_data/blacklisted_object_names.txt";
+        private string remoteBlacklistURL = "https://sleepie.dev/amongusvr/mod/dynamic_data/blacklisted_object_names.txt";
         private bool doRemoteBlacklistUpdate = true;
 
         private MelonPreferences_Entry<string>? remoteBlacklistURL_config;
@@ -466,6 +466,7 @@ exit
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
                     MelonLogger.Msg($"Updating blacklisted objects from url: {remoteBlacklistURL}");
                     string response = client.GetStringAsync(remoteBlacklistURL).GetAwaiter().GetResult();
                     File.WriteAllText(blacklistFilePath, response);
