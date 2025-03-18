@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\techi\\source\\repos\\AmongUsHacks\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacks\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacks\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacks\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacks\\amongushacks.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -74,26 +74,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacks\\Class1.cs",
               "RelativeDocumentMoniker": "Class1.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacks\\Class1.cs",
               "RelativeToolTip": "Class1.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAAAAwCcBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACgFAAAAAAAAAAAAALIFAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T13:07:34.682Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacks\\Properties\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacks\\Properties\\AssemblyInfo.cs",
               "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T13:10:38.856Z",
               "EditorCaption": ""

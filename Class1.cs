@@ -151,6 +151,15 @@ namespace AmongUsHacks
         private Task? receiveTask;
 
 
+        private int colorsAmount = 11;
+        private int currentColor = 0;
+        private bool rainbowColors = false;
+        private KeyCode rainbowColorsKey = KeyCode.R;
+        private System.Collections.Generic.List<PlayerState>? rainbowPlayers = null;
+        private int rainbowFrame = 0;
+        private int maxRainbowFrames = 20;
+
+
 
         private GameObject? newInstanceDetectorObject;
 
@@ -358,6 +367,10 @@ exit
             {
                 DoKillEveryoneTestThingie();
             }
+            if (rainbowColors)
+            {
+                DoRainbowColors();
+            }
         }
 
         private void HandleKeybinds()
@@ -414,6 +427,10 @@ exit
             {
                 testKillEveryoneUseSelf = !testKillEveryoneUseSelf;
                 MelonLogger.Msg($"toggled kill everyone use self to ${testKillEveryoneUseSelf}");
+            }
+            if (Input.GetKeyDown(rainbowColorsKey))
+            {
+                ToggleRainbowColors();
             }
         }
         
@@ -1422,6 +1439,43 @@ exit
         }
 
 
+        private void DoRainbowColors()
+        {
+            if (rainbowPlayers != null)
+            {
+                if (rainbowFrame == maxRainbowFrames)
+                {
+                    if (currentColor == 11)
+                    {
+                        currentColor = 0;
+                    }
+
+                    foreach (PlayerState player in rainbowPlayers)
+                    {
+                        player.UpdateColorID(currentColor);
+                    }
+
+                    currentColor++;
+                    rainbowFrame = 0;
+                } else
+                {
+                    rainbowFrame++;
+                }
+            }
+        }
+
+        private void ToggleRainbowColors()
+        {
+            rainbowPlayers = new System.Collections.Generic.List<PlayerState>();
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                rainbowPlayers.Add(player);
+            }
+
+            rainbowColors = !rainbowColors;
+        }
+
+
         private void TestForceImposter()
         {
 
@@ -1468,6 +1522,10 @@ exit
             VoiceChatManager e6 = new VoiceChatManager();
             //e6._voiceBridgePrefab
             AirlockVoiceBridge e7 = new AirlockVoiceBridge();
+            /*foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                player.UpdateColorID
+            }*/
             //e7.
             /* i wanna work on a ban bypasser and name spoofer so im experimenting with steam stuff here lol */
             //SteamEntitlement e8 = new SteamEntitlement();
@@ -1490,7 +1548,7 @@ exit
             //CSteamAPIContext
             //CSteamID
 
-            
+
 
 
             //HSteamUser e8 = Il2CppSteamworks.SteamAPI.GetHSteamUser();

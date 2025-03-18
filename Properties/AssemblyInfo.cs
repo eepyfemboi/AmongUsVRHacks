@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using MelonLoader;
 using AmongUsHacks; // The namespace of your mod class
 // ...
-[assembly: MelonInfo(typeof(Class1), "AmongUsVRHacks", "1.0.1", "eepyfemboi")]
+[assembly: MelonInfo(typeof(Class1), "AmongUsVRHacks", "1.0.2.2", "eepyfemboi")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
