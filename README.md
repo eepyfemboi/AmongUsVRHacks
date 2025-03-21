@@ -31,6 +31,8 @@ planned features:
 - tracers (draws a line from you to other players)
 - a clickgui for toggling and configuring modules
 
+i kinda made a discord server for this project at https://discord.gg/63pGBPXNVP if anyone wants to join to suggest features, etc.
+
 this was mostly made by using unity explorer to dig around in the game, so if you want to contribute, keep that in mind
 
 the end result will probably have rly low code quality and wont work very well, but its better than nothing :3 
@@ -41,4 +43,4 @@ if you dont like my code quality then dont open issues send prs
 
 also dont use it for malicious purposes pls
 
-you might be able to use this on quest with lemonloader, but im not sure and i wont fix any issues arising from this usage. https://github.com/LemonLoader/MelonLoader/wiki
+~~you might be able to use this on quest with lemonloader, but im not sure and i wont fix any issues arising from this usage.~~ it seems that there's currently a fork of this repo being made for lemonloader at https://github.com/00xx11/AmongUsVRHacks-Lemonloader if anyone wants to look at it. Disclaimer: i dont endorse any of the code on there, use it at your own risk. Also, to the person maintaining the fork, feel free to message me if you need any help on it. https://github.com/LemonLoader/MelonLoader/wiki
