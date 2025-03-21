@@ -140,7 +140,7 @@ namespace AmongUsHacks
         private static readonly string ModFileName = "AmongUsHacks.dll";
         private static readonly string ModFolderPath = "Mods";
 
-        private static readonly string CurrentVersion = "1.0.1";
+        private static readonly string CurrentVersion = "1.0.2";
         private static readonly string UserAgent = "AmongUsVRHacks/1.0 (Windows; MelonLoader)";
 
 
