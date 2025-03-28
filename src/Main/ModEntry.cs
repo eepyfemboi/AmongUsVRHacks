@@ -13,6 +13,7 @@ namespace AmongUsHacks.Main
 
         public override void OnInitializeMelon()
         {
+            MelonLogger.Msg("hi");
             Instance = this;
             Config.Load();
             BlacklistManager.Load();
