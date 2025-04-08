@@ -54,6 +54,8 @@ namespace AmongUsHacks.Utils
                 KillCooldown.Toggle();
             }
 
+            AutomaticFeatures.OnInstanceChanged();
+
             MelonLogger.Msg("Instance change detected! Resetting values.");
         }
     }

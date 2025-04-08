@@ -4,6 +4,8 @@ using UnityEngine;
 using Il2CppFusion;
 using Il2CppSG.Airlock.Network;
 using Exception = System.Exception;
+using AmongUsHacks.Features;
+using AmongUsHacks.Main;
 
 
 namespace AmongUsHacks.Data
@@ -12,5 +14,7 @@ namespace AmongUsHacks.Data
     {
         public static GameObject? newInstanceDetectorObject;
         public static NetworkedKillBehaviour? killManager;
+        public static NativeDebugMenu? nativeDebugMenu;
+        public static UIMenuOperator? menuOp;
     }
 }

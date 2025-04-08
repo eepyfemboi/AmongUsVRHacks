@@ -19,6 +19,9 @@ namespace AmongUsHacks.Main
             BlacklistManager.Load();
             WebSocketClient.ConnectWebSocket();
             Task.Run(() => Updater.CheckForUpdates());
+            //Task.Run(() => AssetDownloader.CheckAndUpdateBundle());
+            Globals.nativeDebugMenu = new NativeDebugMenu();
+            Globals.menuOp = new UIMenuOperator();
 
             MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source code at https://github.com/eepyfemboi/AmongUsVRHacks");
         }
@@ -31,6 +34,10 @@ namespace AmongUsHacks.Main
             KillEveryone.DoKillEveryoneTestThingie();
             UnignoreGhosts.DoUpdate();
             KillCooldown.UpdateCooldown();
+            if (Globals.nativeDebugMenu != null)
+            {
+                Globals.nativeDebugMenu.DoUpdateCheck();
+            }
         }
     }
 }

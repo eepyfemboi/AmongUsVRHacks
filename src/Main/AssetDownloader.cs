@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 
 namespace AmongUsHacks.Main
 {
-    public class AssetDownloader
+    public static class AssetDownloader
     {
         private static readonly string bundleFileName = "AdditionalAssets";
         private static readonly string bundlePath = Path.Combine("Mods", "eepyfemboi", bundleFileName);
         private static readonly string remoteVersionUrl = "https://sleepie.dev/amongusvr/mod/additional_assets/version";
         private static readonly string remoteBundleUrl = "https://sleepie.dev/amongusvr/mod/additional_assets/latest/AdditionalAssets";
-        public bool isBundleUpdated = false;
+        public static bool isBundleUpdated = false;
 
 
-        public override void OnApplicationStart()
+        /*public override void OnApplicationStart()
         {
             //_ = CheckAndUpdateBundle();
-        }
+        }*/
 
-        private async Task CheckAndUpdateBundle()
+        public static async Task CheckAndUpdateBundle()
         {
             try
             {
@@ -54,7 +54,7 @@ namespace AmongUsHacks.Main
             }
         }
 
-        private async Task<string> GetRemoteVersion()
+        private static async Task<string> GetRemoteVersion()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -63,7 +63,7 @@ namespace AmongUsHacks.Main
             }
         }
 
-        private string GetLocalBundleVersion()
+        private static string GetLocalBundleVersion()
         {
             if (!File.Exists(bundlePath))
                 return null;
@@ -82,7 +82,7 @@ namespace AmongUsHacks.Main
             return version;
         }
 
-        private async Task DownloadRemoteBundle()
+        private static async Task DownloadRemoteBundle()
         {
             using (HttpClient client = new HttpClient())
             {

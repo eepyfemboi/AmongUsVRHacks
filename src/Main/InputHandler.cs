@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using AmongUsHacks.Features;
+using AmongUsHacks.Data;
 
 namespace AmongUsHacks.Main
 {
@@ -33,6 +34,12 @@ namespace AmongUsHacks.Main
 
             if (Input.GetKeyDown(Config.KillCooldownKey))
                 KillCooldown.Toggle();
+
+            if (Input.GetKeyDown(Config.NativeDebugMenuKey) && Globals.nativeDebugMenu != null)
+                Globals.nativeDebugMenu.ToggleNativeMenu();
+
+            if (Input.GetKeyDown(KeyCode.M))
+                Globals.menuOp.ToggleMenu();
         }
     }
 }

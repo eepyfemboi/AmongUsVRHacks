@@ -84,6 +84,12 @@
     <Reference Include="Il2CppSteamVR_Actions">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppSteamVR_Actions.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppToxMod">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2CppToxMod.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cpp__Generated">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\Il2Cpp__Generated.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
@@ -137,6 +143,18 @@
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
       <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Among Us VR\MelonLoader\Il2CppAssemblies\UnityEngine.XRModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

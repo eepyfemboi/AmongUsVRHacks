@@ -6,6 +6,7 @@ using Exception = System.Exception;
 using Il2Cpp;
 using AmongUsHacks.Data;
 using Il2CppSG.Airlock.UI;
+using Il2CppSG.Airlock;
 
 
 namespace AmongUsHacks.Utils
@@ -95,6 +96,17 @@ namespace AmongUsHacks.Utils
             }
 
             return playerId;
+        }
+
+        public static PlayerState? GetSelfPlayerState()
+        {
+            int selfPlayerId = GetSelfPlayerID();
+            
+            foreach (PlayerState player in UnityEngine.Object.FindObjectsOfType<PlayerState>())
+            {
+                if (player.PlayerId == selfPlayerId) { return player; }
+            }
+            return null;
         }
 
         public static bool CheckIfCrewmateIsSelf(GameObject obj, int selfPlayerId)

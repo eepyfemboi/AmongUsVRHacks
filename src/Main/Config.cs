@@ -17,6 +17,7 @@ namespace AmongUsHacks.Main
         public static KeyCode KillCooldownKey { get; private set; }
         public static KeyCode ForceImposterKey { get; private set; }
         public static KeyCode UnignoreGhostsKey { get; private set; }
+        public static KeyCode NativeDebugMenuKey { get; private set; }
 
         public static float SpeedSetting { get; private set; }
         public static int OverlayLayer { get; private set; }
@@ -38,6 +39,7 @@ namespace AmongUsHacks.Main
             KillCooldownKey = settings.CreateEntry("KillCooldownKey", KeyCode.K, "Toggle Kill Cooldown Key").Value;
             ForceImposterKey = settings.CreateEntry("ForceImposterKey", KeyCode.F, "Force Imposter Key").Value;
             UnignoreGhostsKey = settings.CreateEntry("UnignoreGhostsKey", KeyCode.U, "Toggle Force Unignore Ghosts Key").Value;
+            NativeDebugMenuKey = settings.CreateEntry("NativeDebugMenuKey", KeyCode.F3, "Toggle Native Debug Menu Key").Value;
 
             SpeedSetting = settings.CreateEntry("SpeedSetting", 11f, "Speed Increase Value").Value;
             OverlayLayer = settings.CreateEntry("WallHackOverlayLayer", 7, "WallHack Overlay Layer").Value;

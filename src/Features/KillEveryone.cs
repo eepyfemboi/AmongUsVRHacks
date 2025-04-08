@@ -14,7 +14,7 @@ namespace AmongUsHacks.Features
         public static bool killEveryoneActive = false;
         public static bool killEveryoneUseSelf = false;
 
-        private static void TestKillEveryoneMethod1()
+        public static void TestKillEveryoneMethod1()
         {
             Helpers.RefreshKillManager();
 
@@ -63,7 +63,7 @@ namespace AmongUsHacks.Features
             }
         }
 
-        private static void TestKillEveryoneMethod2()
+        public static void TestKillEveryoneMethod2()
         {
             Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
             if (killEveryoneUseSelf)
@@ -78,7 +78,7 @@ namespace AmongUsHacks.Features
             }
         }
 
-        private static void TestKillEveryoneMethod3()
+        public static void TestKillEveryoneMethod3()
         {
             Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
             if (killEveryoneUseSelf)
@@ -93,7 +93,7 @@ namespace AmongUsHacks.Features
             }
         }
 
-        private static void TestKillEveryoneMethod4()
+        public static void TestKillEveryoneMethod4()
         {
             Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
             if (killEveryoneUseSelf)
@@ -108,7 +108,7 @@ namespace AmongUsHacks.Features
             }
         }
 
-        private static void TestKillEveryoneMethod5()
+        public static void TestKillEveryoneMethod5()
         {
             Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
             if (killEveryoneUseSelf)
@@ -123,7 +123,7 @@ namespace AmongUsHacks.Features
             }
         }
 
-        private static void TestKillEveryoneMethod6()
+        public static void TestKillEveryoneMethod6()
         {
             Il2CppSystem.Nullable<PlayerRef> selfPlayerRef = new Il2CppSystem.Nullable<PlayerRef>();
             if (killEveryoneUseSelf)

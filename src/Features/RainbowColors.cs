@@ -35,7 +35,9 @@ namespace AmongUsHacks.Features
 
                         foreach (PlayerState player in rainbowPlayers)
                         {
-                            player.UpdateColorID(currentColor);
+                            //player.UpdateColorID(currentColor);
+                            player.ColorId = currentColor;
+                            //player.RPC_ForceCheckColor //harmony patch this later ig idk
                         }
 
                         currentColor++;
