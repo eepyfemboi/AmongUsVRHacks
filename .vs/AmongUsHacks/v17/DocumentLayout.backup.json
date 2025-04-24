@@ -7,6 +7,18 @@
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\main\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\main\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\utils\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\utils\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\utils\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\utils\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\main\\uimenuoperator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\main\\uimenuoperator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,10 +35,6 @@
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\features\\wallhack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\utils\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\utils\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\features\\killeveryone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\features\\killeveryone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -35,20 +43,12 @@
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\main\\modentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\main\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\main\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\main\\assetdownloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\main\\assetdownloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\data\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\data\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\utils\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|solutionrelative:src\\utils\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1BAD3B54-353D-4418-8749-3E3C7B738394}|AmongUsHacks.csproj|c:\\users\\techi\\source\\repos\\amongushacksnew\\src\\features\\testing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -94,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 21,
+          "SelectedChildIndex": 20,
           "Children": [
             {
               "$type": "Document",
@@ -110,20 +110,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "UIMenuOperator.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\UIMenuOperator.cs",
               "RelativeDocumentMoniker": "src\\Main\\UIMenuOperator.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\UIMenuOperator.cs",
               "RelativeToolTip": "src\\Main\\UIMenuOperator.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAiwGIAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAqwFsAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:05:23.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T07:05:23.26Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AssetDownloader.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\AssetDownloader.cs",
               "RelativeDocumentMoniker": "src\\Main\\AssetDownloader.cs",
@@ -131,25 +130,23 @@
               "RelativeToolTip": "src\\Main\\AssetDownloader.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAFQAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:03:46.553Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T07:03:46.553Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Misc.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Utils\\Misc.cs",
               "RelativeDocumentMoniker": "src\\Utils\\Misc.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Utils\\Misc.cs",
               "RelativeToolTip": "src\\Utils\\Misc.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T06:55:32.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T06:55:32.47Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Globals.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Data\\Globals.cs",
               "RelativeDocumentMoniker": "src\\Data\\Globals.cs",
@@ -157,8 +154,7 @@
               "RelativeToolTip": "src\\Data\\Globals.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T05:21:38.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T05:21:38.646Z"
             },
             {
               "$type": "Document",
@@ -170,8 +166,7 @@
               "RelativeToolTip": "src\\Features\\Testing.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAC4AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T03:35:08.635Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T03:35:08.635Z"
             },
             {
               "$type": "Document",
@@ -183,8 +178,7 @@
               "RelativeToolTip": "src\\Features\\ForceImposter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T16:21:56.348Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T16:21:56.348Z"
             },
             {
               "$type": "Document",
@@ -196,8 +190,7 @@
               "RelativeToolTip": "src\\Features\\ImposterReveal.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T19:19:27.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-28T19:19:27.531Z"
             },
             {
               "$type": "Document",
@@ -209,12 +202,11 @@
               "RelativeToolTip": "src\\Features\\RainbowColors.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T18:54:17.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-28T18:54:17.433Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Wallhack.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Features\\Wallhack.cs",
               "RelativeDocumentMoniker": "src\\Features\\Wallhack.cs",
@@ -222,16 +214,11 @@
               "RelativeToolTip": "src\\Features\\Wallhack.cs",
               "ViewState": "AgIAAGgAAAAAAAAAAAAIwDsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T18:27:06.297Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:998484242:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+              "WhenOpened": "2025-03-28T18:27:06.297Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "KillEveryone.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Features\\KillEveryone.cs",
               "RelativeDocumentMoniker": "src\\Features\\KillEveryone.cs",
@@ -239,12 +226,11 @@
               "RelativeToolTip": "src\\Features\\KillEveryone.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwBAAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T17:28:33.701Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T17:28:33.701Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "KillCooldown.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Features\\KillCooldown.cs",
               "RelativeDocumentMoniker": "src\\Features\\KillCooldown.cs",
@@ -252,8 +238,7 @@
               "RelativeToolTip": "src\\Features\\KillCooldown.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T19:25:54.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T19:25:54.046Z"
             },
             {
               "$type": "Document",
@@ -265,12 +250,11 @@
               "RelativeToolTip": "src\\Utils\\Networking.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T17:37:39.691Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T17:37:39.691Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "BlacklistManager.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Data\\BlacklistManager.cs",
               "RelativeDocumentMoniker": "src\\Data\\BlacklistManager.cs",
@@ -278,18 +262,17 @@
               "RelativeToolTip": "src\\Data\\BlacklistManager.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T16:57:02.458Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T16:57:02.458Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "Helpers.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Utils\\Helpers.cs",
               "RelativeDocumentMoniker": "src\\Utils\\Helpers.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Utils\\Helpers.cs",
               "RelativeToolTip": "src\\Utils\\Helpers.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAUwGwAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAwGgAAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T16:46:48.443Z",
               "EditorCaption": ""
@@ -304,18 +287,17 @@
               "RelativeToolTip": "src\\Main\\Config.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T16:45:29.372Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T16:45:29.372Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "InputHandler.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\InputHandler.cs",
               "RelativeDocumentMoniker": "src\\Main\\InputHandler.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\InputHandler.cs",
               "RelativeToolTip": "src\\Main\\InputHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T16:45:28.73Z",
               "EditorCaption": ""
@@ -330,12 +312,11 @@
               "RelativeToolTip": "src\\Main\\Updater.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T16:45:27.896Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T16:45:27.896Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "ModEntry.cs",
               "DocumentMoniker": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\src\\Main\\ModEntry.cs",
               "RelativeDocumentMoniker": "src\\Main\\ModEntry.cs",
@@ -343,8 +324,7 @@
               "RelativeToolTip": "src\\Main\\ModEntry.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T16:45:26.724Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T16:45:26.724Z"
             },
             {
               "$type": "Document",
@@ -366,10 +346,14 @@
               "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
               "ToolTip": "C:\\Users\\techi\\source\\repos\\AmongUsHacksNew\\Properties\\AssemblyInfo.cs",
               "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T13:10:38.856Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:998484242:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
             },
             {
               "$type": "Bookmark",
