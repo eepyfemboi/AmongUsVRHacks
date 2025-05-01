@@ -5,13 +5,13 @@ a melonloader hack client for amongus vr (only officially works for steamvr/pc, 
 
 ## TO USE THIS YOU MUST BE USING PCVR/STEAMVR. THIS WILL NOT WORK FOR QUEST, PLAYSTATION, OR ANYTHING OTHER THAN STEAMVR.
 
-### This is a melonloader mod, meaning you have to be using melonloader to run it. To install melonloader, click here: [https://melonwiki.xyz/](https://melonwiki.xyz/)
+### This is a Melonloader mod, meaning you have to be using Melonloader to run it. To install Melonloader, click here: [https://melonwiki.xyz/](https://melonwiki.xyz/)
 
 ### I'm planning on making an auto-installer that you can run to install melonloader and the mod automatically, but for now, you have to do all of it manually. Tutorial here: https://youtu.be/cVmR-f71NkE
 
 current features include:
 - no kill cooldown (makes you able to kill everyone instantly while imposter) -- Press "K" to toggle
-- no-clip (disabling colliders and the blinding box - currently only works on skeld right now) -- Press "C" to toggle
+- no-clip (Disables the Players collider component, removes Blindboxes and if on Polus will forcefully enable EntireLevelSightbox) -- Press "C" to toggle
 - speed increase -- Press "S" to toggle
 - force show imposters (this only works if you're the host i think) -- Press "I" to toggle
 - WallHacks (allows you to see players through walls) -- Press "W" to toggle
