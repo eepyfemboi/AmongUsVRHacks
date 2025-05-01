@@ -114,7 +114,7 @@ namespace AmongUsHacks.Features
             MelonLogger.Msg($"Restored XRRig Collision");
         }
 
-        // Uses coroutine to forcefully enable the "EntireLevelSightbox" by force. I've tried other ways, This shit is actually just the one way I could find over 2 hours of testing
+        // Uses coroutine to forcefully enable the "EntireLevelSightbox". I've tried other ways, This shit is actually just the one way I could find over 2 hours of testing
         private static IEnumerator EnableSightboxAfterDelay(GameObject sightbox)
         {
             yield return new WaitForSeconds(0.2f);
