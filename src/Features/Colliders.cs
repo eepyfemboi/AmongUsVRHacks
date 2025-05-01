@@ -1,72 +1,130 @@
 ﻿using UnityEngine;
 using MelonLoader;
 using AmongUsHacks.Data;
+using AmongUsHacks.Main;
+using Il2CppSG.Airlock.XR;
+using Il2Cpp;
+using Il2CppSG.Airlock.Blindbox;
+using UnityEngine.SceneManagement;
+using static Il2Cpp.Utils;
+using System.Collections;
 
 namespace AmongUsHacks.Features
 {
     public static class Colliders
     {
         public static bool toggled = false;
-        private static System.Collections.Generic.List<GameObject> disabledObjectsList = new System.Collections.Generic.List<GameObject>();
 
         public static void Toggle()
         {
-            MelonLogger.Msg($"Toggling colliders to {!toggled}");
-            BlacklistManager.Load();
+            MelonLogger.Msg($"Toggling NoClip..");
 
             if (toggled)
-                ReEnableDisabledObjects();
+                ReEnableNoClipping();
             else
-                DisableMatchingObjects();
+                DisableNoClipping();
 
             toggled = !toggled;
-            MelonLogger.Msg($"Toggled colliders to {toggled}");
+            MelonLogger.Msg($"NoClip was successfuly toggled!");
         }
 
-        private static void DisableMatchingObjects()
+        private static void DisableNoClipping()
         {
-            int disabledCount = 0;
-            disabledObjectsList = new System.Collections.Generic.List<GameObject>();
-
-            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            foreach (XRRig rig in GameObject.FindObjectsOfType<XRRig>())
             {
-                if (BlacklistManager.blacklist.Any(phrase => obj.name.IndexOf(phrase, System.StringComparison.OrdinalIgnoreCase) >= 0))
-                {
-                    obj.SetActive(false);
-                    disabledObjectsList.Add(obj);
-                    disabledCount++;
-                    MelonLogger.Msg($"Disabled: {obj.name}");
-                }
-            }
+                rig._collider.enabled = true;
 
-            MelonLogger.Msg($"Finished disabling {disabledCount} objects.");
+                Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+
+                if (sceneName == "PolusPoint")
+                {
+                    GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
+
+                    foreach (GameObject obj in allObjects)
+                    {
+                        if (obj.name.Contains("EntireLevelSightbox"))
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                }
+                else
+                {
+                    GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(false);
+
+                    foreach (GameObject obj in allObjects)
+                    {
+                        if (obj.name.ToLower().Contains("blind"))
+                        {
+                            obj.SetActive(true);
+                        }
+                    }
+                }
+
+                MelonLogger.Msg($"Disabled Player Collision!");
+            }
         }
 
-        private static void ReEnableDisabledObjects()
+        private static void ReEnableNoClipping()
         {
-            int enabledCount = 0;
             try
             {
-                foreach (GameObject obj in disabledObjectsList)
+                foreach (XRRig rig in GameObject.FindObjectsOfType<XRRig>())
                 {
-                    try
+                    rig._collider.enabled = false;
+
+                    Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                    string sceneName = currentScene.name;
+
+                    if (sceneName == "PolusPoint")
                     {
-                        obj.SetActive(true);
-                        enabledCount++;
-                        MelonLogger.Msg($"Re-Enabled: {obj.name}");
+                        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
+
+                        foreach (GameObject obj in allObjects)
+                        {
+                            if (obj.name.Contains("EntireLevelSightbox"))
+                            {
+                                // Start coroutine to enable after specified delay
+                                MelonCoroutines.Start(EnableSightboxAfterDelay(obj));
+                            }
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MelonLogger.Msg($"Failed to re-enable object: {obj.name}");
+                        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
+
+                        foreach (GameObject obj in allObjects)
+                        {
+                            if (obj.name.ToLower().Contains("blind"))
+                            {
+                                obj.SetActive(false);
+                            }
+                        }
                     }
+
+                    MelonLogger.Msg($"Enabled Player Collision");
                 }
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg(ex);
+                MelonLogger.Msg($"Exception while enabling NoClip: {ex}");
             }
 
-            MelonLogger.Msg($"Finished re-enabling {enabledCount} objects");
+            MelonLogger.Msg($"Restored XRRig Collision");
+        }
+
+        // Uses coroutine to forcefully enable the "EntireLevelSightbox" by force. I've tried other ways, This shit is actually just the one way I could find over 2 hours of testing
+        private static IEnumerator EnableSightboxAfterDelay(GameObject sightbox)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (sightbox != null && !sightbox.activeSelf)
+            {
+                sightbox.SetActive(false); // Reset if required / needed
+                yield return new WaitForSeconds(0.1f);
+                sightbox.SetActive(true);  // Attempt to enable EntireLevelSightbox again
+                MelonLogger.Msg($"Forcefully disabled Blindboxes on Polus Point!");
+            }
         }
     }
 }

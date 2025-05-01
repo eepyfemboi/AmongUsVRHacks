@@ -13,17 +13,16 @@ namespace AmongUsHacks.Main
 
         public override void OnInitializeMelon()
         {
-            MelonLogger.Msg("hi");
+            MelonLogger.Msg("Howdy! Got games on your PC?");
             Instance = this;
             Config.Load();
-            BlacklistManager.Load();
             WebSocketClient.ConnectWebSocket();
             Task.Run(() => Updater.CheckForUpdates());
             //Task.Run(() => AssetDownloader.CheckAndUpdateBundle());
             Globals.nativeDebugMenu = new NativeDebugMenu();
             Globals.menuOp = new UIMenuOperator();
 
-            MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! View the source code at https://github.com/eepyfemboi/AmongUsVRHacks");
+            MelonLogger.Msg("Sleepy's AmongUsVR Hacks Loaded! Fork by MrClockwork! View the source code at https://github.com/eepyfemboi/AmongUsVRHacks");
         }
 
         public override void OnUpdate()

@@ -1,0 +1,3 @@
+D:\Downloads D-Drive\Projects\AmongUsVRHacks-main\obj\Debug\net6.0\AmongUsHacks.csproj.AssemblyReference.cache
+D:\Downloads D-Drive\Projects\AmongUsVRHacks-main\obj\Debug\net6.0\AmongUsHacks.GeneratedMSBuildEditorConfig.editorconfig
+D:\Downloads D-Drive\Projects\AmongUsVRHacks-main\obj\Debug\net6.0\AmongUsHacks.csproj.CoreCompileInputs.cache

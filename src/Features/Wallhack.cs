@@ -53,7 +53,7 @@ namespace AmongUsHacks.Features
 
             ApplyOverrender(gameObjectsToUpdate);
 
-            MelonLogger.Msg($"Enabled wallhacks for ${wallHackCount} objects");
+            MelonLogger.Msg($"Enabled wallhacks for {wallHackCount} objects");
         }
 
         private static void SetupOverlayCamera()
