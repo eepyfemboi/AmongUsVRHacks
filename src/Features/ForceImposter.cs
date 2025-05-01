@@ -18,8 +18,8 @@ namespace AmongUsHacks.Features
             Helpers.RefreshKillManager();
             PlayerRef playerRef = Helpers.GetSelfPlayerRef();
             //Globals.killManager.AlterRole(GameRole.Imposter, playerRef);
-            Globals.killManager.AlterRole(GameRole.Vigilante, playerRef);
-            MelonLogger.Msg($"Successfully forced imposter.");
+            Globals.killManager.AlterRole(GameRole.Imposter, playerRef);
+            MelonLogger.Msg($"Successfully forced Imposter.");
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using AmongUsHacks.Main; // Updated to use ModEntry class
 
-[assembly: MelonInfo(typeof(ModEntry), "AmongUsVRHacks", "2.0.0", "eepyfemboi")]
+[assembly: MelonInfo(typeof(ModEntry), "AmongUsVRHacks", "2.0.0", "EepyFemBoi")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -12,7 +12,7 @@ using AmongUsHacks.Main; // Updated to use ModEntry class
 [assembly: AssemblyTitle("AmongUsVRHacks")]
 [assembly: AssemblyDescription("A MelonLoader mod for Among Us VR.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("eepyfemboi")]
+[assembly: AssemblyCompany("EepyFemBoi")]
 [assembly: AssemblyProduct("AmongUsVRHacks")]
 [assembly: AssemblyCopyright("Copyright ©  2025")]
 [assembly: AssemblyTrademark("")]

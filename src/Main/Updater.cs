@@ -31,7 +31,7 @@ namespace AmongUsHacks.Main
                 }
                 else
                 {
-                    MelonLogger.Msg("You are running the latest version.");
+                    MelonLogger.Msg("We're up-to-date! Hooray!");
                 }
             }
             catch (Exception ex)
