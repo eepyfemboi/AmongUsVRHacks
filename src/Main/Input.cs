@@ -68,6 +68,8 @@ namespace AmongUsHacks.Main
                 KeyCode.Escape => Keyboard.current.escapeKey,
                 KeyCode.Return => Keyboard.current.enterKey,
                 KeyCode.Backspace => Keyboard.current.backspaceKey,
+
+                KeyCode.DownArrow => Keyboard.current.downArrowKey,
                 _ => null,
             };
         }

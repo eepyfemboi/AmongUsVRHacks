@@ -6,6 +6,8 @@ using Il2CppFusion;
 using Il2CppSG.Airlock;
 using AmongUsHacks.Utils;
 using AmongUsHacks.Data;
+using AmongUsHacks.Main;
+using Input = AmongUsHacks.Main.Input;
 
 namespace AmongUsHacks.Features
 {
