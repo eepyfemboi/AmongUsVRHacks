@@ -11,7 +11,7 @@ a melonloader hack client for amongus vr (only officially works for steamvr/pc, 
 
 current features include:
 - no kill cooldown (makes you able to kill everyone instantly while imposter) -- Press "K" to toggle
-- no-clip (disabling colliders and the blinding box - currently only works on skeld right now) -- Press "C" to toggle
+- no-clip (Works on all maps! :D) -- Press "C" to toggle
 - speed increase -- Press "S" to toggle
 - force show imposters (this only works if you're the host i think) -- Press "I" to toggle
 - WallHacks (allows you to see players through walls) -- Press "W" to toggle
@@ -21,9 +21,9 @@ current features include:
 - Rainbow Colors (makes everyone in the lobby change colors, only works if youre the host) -- Press "R" to toggle
 - RPC websocket (lets you see how many people are online with the client by going to https://amongusvr.sleepie.dev/online and you can see how many times people have used the client by going to https://amongusvr.sleepie.dev/startups :3)
 - auto updater
-
+- kill alerts (alerts you when someone kills someone else) - Press "D" to toggle it
+  
 planned features:
-- kill alerts (alerts you when someone kills someone else)
 - minigame/task autocompleter
 - ~~unignore ghosts (will allow you to see and talk to dead players)~~
 - dead interact (will allow you to interact with stuff that you normally cant interact with when you're dead, i.e. voting, sabotages, etc)
