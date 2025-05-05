@@ -164,4 +164,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\UserInterface\" />
+  </ItemGroup>
+
 </Project>

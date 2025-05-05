@@ -31,7 +31,7 @@ namespace AmongUsHacks.Features
 
         private static void Disable()
         {
-            MelonLogger.Msg("removing wallhacks");
+            MelonLogger.Msg("Disabling Wallhacks");
             RestoreOriginalLayers();
         }
 

@@ -15,6 +15,5 @@ namespace AmongUsHacks.Data
         public static GameObject? newInstanceDetectorObject;
         public static NetworkedKillBehaviour? killManager;
         public static NativeDebugMenu? nativeDebugMenu;
-        public static UIMenuOperator? menuOp;
     }
 }

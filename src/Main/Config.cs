@@ -18,13 +18,11 @@ namespace AmongUsHacks.Main
         public static KeyCode ForceImposterKey { get; private set; }
         public static KeyCode UnignoreGhostsKey { get; private set; }
         public static KeyCode NativeDebugMenuKey { get; private set; }
+        public static KeyCode DeathLoggerKey { get; private set; }
 
         public static float SpeedSetting { get; private set; }
         public static int OverlayLayer { get; private set; }
         public static string UserAgent { get; private set; }
-        public static string RemoteBlacklistURL { get; private set; }
-        public static bool DoRemoteBlacklistUpdate { get; private set; }
-        public static string BlacklistFilePath { get; private set; }
 
         public static void Load()
         {
@@ -45,11 +43,6 @@ namespace AmongUsHacks.Main
             OverlayLayer = settings.CreateEntry("WallHackOverlayLayer", 7, "WallHack Overlay Layer").Value;
 
             UserAgent = settings.CreateEntry("DefaultNetworkUserAgent", "SleepysAmongUsVRHacks/1.0 (Windows; MelonLoader)", "The default User Agent to use for network requests (such as updater, rpc, data updates, etc)").Value;
-
-            RemoteBlacklistURL = settings.CreateEntry("RemoteBlacklistURL", "https://sleepie.dev/amongusvr/mod/dynamic_data/blacklisted_object_names.txt", "Remote Object Blacklist URL").Value;
-            DoRemoteBlacklistUpdate = settings.CreateEntry("DoRemoteBlacklistUpdate", true, "Do Remote Blacklist Update On Load").Value;
-
-            BlacklistFilePath = Path.Combine(MelonEnvironment.GameRootDirectory, "blacklist.txt");
         }
     }
 }

@@ -15,6 +15,11 @@ namespace AmongUsHacks.Main
             return keyControl?.wasPressedThisFrame == true;
         }
 
+        internal static bool GetButtonDown(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         private static KeyControl KeyCodeToKeyControl(KeyCode keyCode)
         {
             return keyCode switch
@@ -68,6 +73,8 @@ namespace AmongUsHacks.Main
                 KeyCode.Escape => Keyboard.current.escapeKey,
                 KeyCode.Return => Keyboard.current.enterKey,
                 KeyCode.Backspace => Keyboard.current.backspaceKey,
+
+                KeyCode.DownArrow => Keyboard.current.downArrowKey,
                 _ => null,
             };
         }

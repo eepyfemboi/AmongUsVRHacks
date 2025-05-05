@@ -39,7 +39,10 @@ namespace AmongUsHacks.Main
                 Globals.nativeDebugMenu.ToggleNativeMenu();
 
             if (Input.GetKeyDown(KeyCode.M))
-                Globals.menuOp.ToggleMenu();
+              //  Globals.menuOp.ToggleMenu();
+
+            if (Input.GetKeyDown(KeyCode.D))
+                DeathLogger.Toggle();
         }
     }
 }
