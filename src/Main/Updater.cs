@@ -13,7 +13,7 @@ namespace AmongUsHacks.Main
         private static readonly string DownloadUrl = "https://sleepie.dev/amongusvr/mod/latest/AmongUsHacks.dll";
         private static readonly string ModFileName = "AmongUsHacks.dll";
         private static readonly string ModFolderPath = "Mods";
-        private static readonly string CurrentVersion = "2.0.0";
+        private static readonly string CurrentVersion = "2.0.2";
 
         public static async Task CheckForUpdates()
         {

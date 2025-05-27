@@ -6,6 +6,7 @@ using Il2CppSG.Airlock.Network;
 using Exception = System.Exception;
 using AmongUsHacks.Features;
 using AmongUsHacks.Main;
+using AmongUsHacks.Utils;
 
 
 namespace AmongUsHacks.Data
@@ -16,5 +17,7 @@ namespace AmongUsHacks.Data
         public static NetworkedKillBehaviour? killManager;
         public static NativeDebugMenu? nativeDebugMenu;
         public static UIMenuOperator? menuOp;
+        public static XRInputWrapper? xrInput;
+        public static bool xrInput_init = false;
     }
 }

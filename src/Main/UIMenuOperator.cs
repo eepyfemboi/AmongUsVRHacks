@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using Il2CppSystem.Data;
 using static UnityEngine.GraphicsBuffer;
 using Il2CppInterop.Runtime.InteropTypes;
+using System.Reflection;
 
 
 namespace AmongUsHacks.Main
@@ -29,6 +30,8 @@ namespace AmongUsHacks.Main
         private AssetBundle? bundle = null;
 
         private GameObject raycastInstance;
+
+        private VRPointerController pointerController;
 
         private void LoadMenu()
         {
@@ -67,7 +70,7 @@ namespace AmongUsHacks.Main
             raycastPrefab = rprefab;
         }
 
-        private void EnsureSetToHand()
+        public void EnsureSetToHand()
         {
             GameObject? lhand = GameObject.FindObjectsOfType<GameObject>().FirstOrDefault(go => go.name == "LeftHand");
             if (lhand == null)
@@ -95,7 +98,8 @@ namespace AmongUsHacks.Main
 
             raycastInstance.transform.SetParent(rhand.transform, false);
             Vector3 rlocalPos = new Vector3(-0.02f, -0.04f, 0f);
-            Vector3 rlocalRot = new Vector3(0f, 270f, 322f);
+            //Vector3 rlocalRot = new Vector3(0f, 270f, 322f);
+            Vector3 rlocalRot = new Vector3(33.3661f, 0, 0);
             Vector3 rlocalSca = new Vector3(1f, 1f, 1f);
             raycastInstance.transform.localPosition = rlocalPos;
             raycastInstance.transform.localEulerAngles = rlocalRot;
@@ -110,12 +114,15 @@ namespace AmongUsHacks.Main
             }
 
             menuInstance = GameObject.Instantiate(menuPrefab);
-            GameObject.DontDestroyOnLoad(menuInstance);
+            //GameObject.DontDestroyOnLoad(menuInstance);
             menuInstance.SetActive(true);
 
             raycastInstance = GameObject.Instantiate(raycastPrefab);
-            GameObject.DontDestroyOnLoad(raycastInstance);
-            menuInstance.SetActive(true);
+            //GameObject.DontDestroyOnLoad(raycastInstance);
+
+            ReplaceWithModVRPointerController(raycastInstance);
+
+            raycastInstance.SetActive(true);
 
             EnsureSetToHand();
 
@@ -128,7 +135,7 @@ namespace AmongUsHacks.Main
             mainMenu = menuInstance.transform.Find("Canvas/Main");
             hostMenu = menuInstance.transform.Find("Canvas/Host");
             normalMenu = menuInstance.transform.Find("Canvas/Normal");
-            killAllMenu = menuInstance.transform.Find("Canvas/Host/KillAll");
+            killAllMenu = menuInstance.transform.Find("Canvas/KillAll");
 
             mainMenu.gameObject.SetActive(true);
             hostMenu.gameObject.SetActive(false);
@@ -263,7 +270,76 @@ namespace AmongUsHacks.Main
             {
                 OpenMenu();
             }
+            EnsureSetToHand();
             menuInstance.SetActive(!menuInstance.activeSelf);
+            raycastInstance.SetActive(!raycastInstance.activeSelf);
+            Camera.main.cullingMask = -1;
         }
+
+
+        /*private void ReplaceWithModVRPointerController(GameObject obj)
+        {
+            var existing = obj.GetComponent<MonoBehaviour>();
+            if (existing == null)
+            {
+                MelonLogger.Msg("couldnt find it");
+                return;
+            }
+
+            var newComponent = obj.AddComponent<VRPointerController>();
+
+            var sourceType = existing.GetType();
+            var targetType = typeof(VRPointerController);
+
+            var fields = sourceType.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+
+            foreach (var field in fields)
+            {
+                // Only copy public or [SerializeField] fields
+                if (!field.IsPublic && field.GetCustomAttribute(typeof(UnityEngine.SerializeField), true) == null)
+                    continue;
+
+                var targetField = targetType.GetField(field.Name, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+                if (targetField != null && targetField.FieldType == field.FieldType)
+                {
+                    var value = field.GetValue(existing);
+                    targetField.SetValue(newComponent, value);
+                }
+            }
+
+            //GameObject.Destroy(existing);
+            MelonLogger.Msg("Replaced bundled VRPointerController with mod version and copied values.");
+        }*/
+        private void ReplaceWithModVRPointerController(GameObject obj)
+        {
+            Component existing = null;
+
+            foreach (var comp in obj.GetComponents<Component>())
+            {
+                if (comp == null) continue;
+                if (comp.GetType().Name == "VRPointerController")
+                {
+                    existing = comp;
+                    break;
+                }
+            }
+
+            if (existing == null)
+            {
+                MelonLogger.Warning($"No baked VRPointerController found on {obj.name}.");
+                //return;
+            }
+
+            var newComponent = obj.AddComponent<VRPointerController>();
+
+            newComponent.maxRayDistance = 10f;
+            newComponent.uiLayerMask = 1 << 5;
+            newComponent.lineRenderer = obj.GetComponent<LineRenderer>();
+
+            GameObject.DestroyImmediate(existing);
+            MelonLogger.Msg("Simplified: Replaced baked VRPointerController with mod version.");
+        }
+
+
     }
 }

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using AmongUsHacks.Features;
 using AmongUsHacks.Data;
+using Il2CppSG.Airlock.UI.TitleScreen;
 
 namespace AmongUsHacks.Main
 {
     public static class InputHandler
     {
+        public static bool menu_enable_combination_pressed = false;
+
         public static void Handle()
         {
             if (Input.GetKeyDown(Config.CollidersToggleKey))
@@ -40,6 +43,17 @@ namespace AmongUsHacks.Main
 
             if (Input.GetKeyDown(KeyCode.M))
                 Globals.menuOp.ToggleMenu();
+
+            if (Globals.xrInput_init) { 
+                if (Globals.xrInput.IsRightGripPressed() && Globals.xrInput.IsLeftGripPressed() && !menu_enable_combination_pressed)
+                {
+                    menu_enable_combination_pressed = true;
+                    Globals.menuOp.ToggleMenu();
+                } else if (!Globals.xrInput.IsRightGripPressed() && !Globals.xrInput.IsLeftGripPressed() && menu_enable_combination_pressed)
+                {
+                    menu_enable_combination_pressed = false;
+                }
+            }
         }
     }
 }

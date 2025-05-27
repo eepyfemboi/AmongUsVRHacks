@@ -55,6 +55,7 @@ namespace AmongUsHacks.Utils
             }
 
             AutomaticFeatures.OnInstanceChanged();
+            Globals.xrInput_init = true;
 
             MelonLogger.Msg("Instance change detected! Resetting values.");
         }
