@@ -32,7 +32,7 @@ planned features:
 - tracers (draws a line from you to other players)
 - a clickgui for toggling and configuring modules
 
-i kinda made a discord server for this project at https://discord.gg/63pGBPXNVP if anyone wants to join to suggest features, etc.
+i kinda made a discord server for this project at https://discord.gg/fp8WBaRE9p if anyone wants to join to suggest features, etc.
 
 this was mostly made by using unity explorer to dig around in the game, so if you want to contribute, keep that in mind
 
