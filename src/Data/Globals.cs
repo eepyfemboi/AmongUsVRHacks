@@ -19,5 +19,6 @@ namespace AmongUsHacks.Data
         public static UIMenuOperator? menuOp;
         public static XRInputWrapper? xrInput;
         public static bool xrInput_init = false;
+        public static bool isVR = false;
     }
 }

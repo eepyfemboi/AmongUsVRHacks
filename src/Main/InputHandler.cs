@@ -41,10 +41,10 @@ namespace AmongUsHacks.Main
             if (Input.GetKeyDown(Config.NativeDebugMenuKey) && Globals.nativeDebugMenu != null)
                 Globals.nativeDebugMenu.ToggleNativeMenu();
 
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.M) && Globals.isVR)
                 Globals.menuOp.ToggleMenu();
 
-            if (Globals.xrInput_init) { 
+            if (Globals.xrInput_init && Globals.isVR) { 
                 if (Globals.xrInput.IsRightGripPressed() && Globals.xrInput.IsLeftGripPressed() && !menu_enable_combination_pressed)
                 {
                     menu_enable_combination_pressed = true;

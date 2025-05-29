@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AmongUsHacks.Features;
 //using UnhollowerRuntimeLib;
 using Il2CppInterop.Runtime.Injection;
+using UnityEngine;
 
 namespace AmongUsHacks.Main
 {
@@ -17,6 +18,15 @@ namespace AmongUsHacks.Main
         {
             ClassInjector.RegisterTypeInIl2Cpp<VRPointerController>();
             MelonLogger.Msg("Registered VRPointerController for use in Il2Cpp");
+
+            if (Application.productName.Contains("VR"))
+            {
+                Globals.isVR = true;
+            } else
+            {
+                Globals.isVR = false;
+            }
+            MelonLogger.Msg($"Set VR mode to {Globals.isVR}");
         }
 
 
