@@ -5,6 +5,8 @@ a melonloader hack client for amongus vr (only officially works for steamvr/pc, 
 
 (update (again)): i'll be fixing some of the stuff that's broken in the current menu soon. keep an eye on the repo to know when the updates are out! :3 
 
+(update (again (again))): i'll start working on the update again once this repo hits 30 stars :3 
+
 ## THIS IS FOR EDUCATIONAL PURPOSES ONLY
 
 ## TO USE THIS YOU MUST BE USING PCVR/STEAMVR. THIS WILL NOT WORK FOR QUEST, PLAYSTATION, OR ANYTHING OTHER THAN STEAMVR.
